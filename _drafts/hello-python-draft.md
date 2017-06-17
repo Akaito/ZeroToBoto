@@ -1,3 +1,8 @@
+---
+layout: post
+title: Hello, Python (draft)
+---
+
 # Hello Python
 
 Preparing to use Python

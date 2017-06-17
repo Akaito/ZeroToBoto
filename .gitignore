@@ -1,6 +1,12 @@
+# Python
 *pyc
 __pycache__
 
+# Vim
 *.vim
 *~
 *.swp
+
+# Jekyll
+Gemfile.lock
+_site
