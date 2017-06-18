@@ -4,7 +4,8 @@
     <article class="post">
         <h2>{{ post.info_order }}. <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
         <div class="entry">
-            {{ post.excerpt }} ...<a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+            {{ post.excerpt }}
+            ... <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
         </div>
     </article>
     <hr/>

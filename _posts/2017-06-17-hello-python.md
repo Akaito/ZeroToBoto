@@ -18,7 +18,7 @@ Hello, Python!
 
 By entering just `python` on the command line, you're put into the [Python interpreter](https://docs.python.org/2/tutorial/interpreter.html).
 Anything you type into the interpreter (followed by pressing &lt;Enter&gt;) is a single line of Python script/code, which is immediately run.
-The next line prints some representation of the result of your statement, if there's anything meaningful to show.
+The next line prints some representation of the result of your statement, if there's anything meaningful to show.  The interpreter is very useful for quickly testing if something works the way you think it should in Python.
 
 `2 + 2` results in `4` being printed, because your statement was interpreted something like `<number> <operator> <number>`, the operation was performed,
 and the final result was rendered as some text output.
@@ -91,8 +91,7 @@ TypeError: cannot concatenate 'str' and 'int' objects
 </pre>
 
 `int` is the type of any "natural" number (0, 1, 2, -4, 5000).<br/>
-`float` is the type of any "fractional" number (1.0, 3.14, 0.5).
-
+`float` is the type of any "fractional" number (1.0, 3.14, 0.5).<br/>
 In neither case does it make sense to Python to append a number to a string.
 
 You may have encountered this, if you forgot to quote your input:
@@ -105,4 +104,33 @@ SyntaxError: invalid syntax
 </pre>
 
 Python saw a non-quoted digit, assumed we were giving it a number, saw the first period, considered it to be a `float`, then got confused when a second period showed up.
+
+---
+
+## Saving work for later
+
+Using your favorite text editor, copy in the *input* from our last example:
+<pre>
+def write_test(address):
+    print "ping -n 5 -a " + address
+    print "tracert " + address + " > trace-result." + address + ".txt"
+
+write_test("10.0.20.5")
+write_test("10.0.21.42")
+</pre>
+
+Save that as write-test.py, or any other helpful name ending in ".py".  Now run `python write-test.py` from the directory where you saved that file.
+This is like telling the Python interpreter to take each line of the file and run it as if you typed it in.  Only now you can just do it again later without typing it all out again.
+
+To make this a more useful tool in the future, delete the two calls to `write_test` at the end.  So the file only has your function definition.
+Now instead run `python -i write-test.py`.  Just like before, your script will be run by the interpreter.  But now you're placed in "inspect"/"interactive" mode right after it finishes, with everything from the script still in existence.  Trying entering `write_test("foo")` now, and you'll see your function run.
+
+<pre>
+$ python -i write-test.py
+>>> write_test("10.0.20.5")
+ping -n 5 -a 10.0.20.5
+tracert 10.0.20.5 > trace-result.10.0.20.5.txt
+</pre>
+
+Now just copy-paste that printed output either into a .bat file, or straight onto a command line.
 
