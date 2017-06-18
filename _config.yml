@@ -1,2 +1,3 @@
+exerpt_separator: <!-- more -->
 permalink: /:categories/:title
 theme: jekyll-theme-cayman
