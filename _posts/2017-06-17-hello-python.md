@@ -77,7 +77,7 @@ ping -n 5 -a 10.0.21.42
 tracert 10.0.21.42 > trace-result.10.0.21.42.txt
 </pre>
 
-`write_test` takes one argument, prints some stuff out, and returns nothing.
+`write_test` takes one argument, prints some stuff out, and returns nothing.  Note that printing *is not* returning something.  Printing writes to the "stdout" (standard out) stream.  This is the same way of communicating with the terminal as you're used to from most programs.  Once we're using saved scripts instead of the interpreter, anything printed with `print` can be redirected to a text file with `foo > result.txt` like you're used to.
 
 - [ ] Explain why `write_test` returns nothing, but we see output.  Maybe differentiate from `2 + 2` statement earlier.
 - [ ] Add header that all posts use to "h1" their title.
