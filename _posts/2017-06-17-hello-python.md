@@ -57,11 +57,10 @@ You define functions by saying `def <function-name>():` in the first line.
 After that, you can see the Python interpreter telling us something new.  Instead of each line after we press &lt;Enter&gt; starting out with `>>>` ("waiting for input"), there's now `...`, which means "waiting for *continued* input".
 We haven't finished our statement yet (for the function's definition).
 
-Whitespace/indentation **is important** in Python.  So the first thing you want to do after naming your function and getting the `...` input continuation, is to hit tab.  Python doesn't care if you use a tab, two spaces, or four spaces, so long as you're *consistent* about it.
+Whitespace/indentation **is important** in Python.  Each statement within your function must be indented.  Python doesn't care if you use a tab, two spaces, or four spaces, so long as you're *consistent* about it.
 Now that you're indented on this line, just call `print` like you did before.  Then press &lt;Enter&gt; to complete that line, and &lt;Enter&gt; once more on a blank line to complete the function definition.
 
-Once you're back at `>>>`, your function has been defined.  Now and forever more (until you `exit()`), you can call your new function as `say_hello()`.
-This becomes more useful with more complicated or repetitive functions, and those that take arguments.
+Once you're back at `>>>`, your function definition statement is complete.  Until you `exit()`), you can call your new function as `say_hello()` over and over.
 
 <pre>
 $ python
@@ -77,8 +76,33 @@ ping -n 5 -a 10.0.21.42
 tracert 10.0.21.42 > trace-result.10.0.21.42.txt
 </pre>
 
-`write_test` takes one argument, prints some stuff out, and returns nothing.  Note that printing *is not* returning something.  Printing writes to the "stdout" (standard out) stream.  This is the same way of communicating with the terminal as you're used to from most programs.  Once we're using saved scripts instead of the interpreter, anything printed with `print` can be redirected to a text file with `foo > result.txt` like you're used to.
+`write_test` takes one argument (named "address"), prints some stuff out, and returns nothing.
+Printing *is not* returning something.  Printing writes to the "stdout" (standard out) stream.
+This is the same way of communicating with the terminal as you're used to from most programs.  Once we're using saved scripts instead of the interpreter, anything printed with `print` can be redirected to a text file with `foo > result.txt` like you're used to.
 
-- [ ] Explain why `write_test` returns nothing, but we see output.  Maybe differentiate from `2 + 2` statement earlier.
-- [ ] Add header that all posts use to "h1" their title.
+`print "ping -n 5 -a " + address`<br/>
+`address` is the name of `write_test`'s one argument.  Here we're assuming it's a string and it can just be added to (appended to) another string.  If someone mis-uses your function and gives a non-string (something note quoted), you'll get an error.
+
+<pre>
+>>> write_test(10)
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+  File "&lt;stdin&gt;", line 2, in write_test
+TypeError: cannot concatenate 'str' and 'int' objects
+</pre>
+
+`int` is the type of any "natural" number (0, 1, 2, -4, 5000).<br/>
+`float` is the type of any "fractional" number (1.0, 3.14, 0.5).
+
+In neither case does it make sense to Python to append a number to a string.
+
+You may have encountered this, if you forgot to quote your input:
+<pre>
+>>> write_test(10.0.20.5)
+  File "&lt;stdin&gt;", line 1
+    write_test(10.0.20.5)
+                     ^
+SyntaxError: invalid syntax
+</pre>
+
+Python saw a non-quoted digit, assumed we were giving it a number, saw the first period, considered it to be a `float`, then got confused when a second period showed up.
 
