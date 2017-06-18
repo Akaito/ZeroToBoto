@@ -5,14 +5,14 @@ date: 2017-06-17 17:08 -07:00
 title: Hello, Python!
 ---
 
-<pre>
+```python
 $ python
 >>> 2 + 2
 4
 >>> print "Hello, Python!"
 Hello, Python!
 >>> exit()
-</pre>
+```
 
 <!-- more -->
 
@@ -44,14 +44,14 @@ Ultimately, the interpreter treats that as something like `call <function> two-a
 
 ## Defining our own functions
 
-<pre>
+```python
 $ python
 >>> def say_hello():
 ...     print "hello"
 ... 
 >>> say_hello()
 hello
-</pre>
+```
 
 You define functions by saying `def <function-name>():` in the first line.
 After that, you can see the Python interpreter telling us something new.  Instead of each line after we press &lt;Enter&gt; starting out with `>>>` ("waiting for input"), there's now `...`, which means "waiting for *continued* input".
@@ -62,7 +62,7 @@ Now that you're indented on this line, just call `print` like you did before.  T
 
 Once you're back at `>>>`, your function definition statement is complete.  Until you `exit()`), you can call your new function as `say_hello()` over and over.
 
-<pre>
+```python
 $ python
 >>> def write_test(address):
 ...     print "ping -n 5 -a " + address
@@ -74,7 +74,7 @@ tracert 10.0.20.5 > trace-result.10.0.20.5.txt
 >>> write_test("10.0.21.42")
 ping -n 5 -a 10.0.21.42
 tracert 10.0.21.42 > trace-result.10.0.21.42.txt
-</pre>
+```
 
 `write_test` takes one argument (named "address"), prints some stuff out, and returns nothing.
 Printing *is not* returning something.  Printing writes to the "stdout" (standard out) stream.
@@ -83,25 +83,25 @@ This is the same way of communicating with the terminal as you're used to from m
 `print "ping -n 5 -a " + address`<br/>
 `address` is the name of `write_test`'s one argument.  Here we're assuming it's a string and it can just be added to (appended to) another string.  If someone mis-uses your function and gives a non-string (something note quoted), you'll get an error.
 
-<pre>
+```python
 >>> write_test(10)
-  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
-  File "&lt;stdin&gt;", line 2, in write_test
+  File "<stdin>", line 1, in <module>
+  File "<stdin>", line 2, in write_test
 TypeError: cannot concatenate 'str' and 'int' objects
-</pre>
+```
 
 `int` is the type of any "natural" number (0, 1, 2, -4, 5000).<br/>
 `float` is the type of any "fractional" number (1.0, 3.14, 0.5).<br/>
 In neither case does it make sense to Python to append a number to a string.
 
 You may have encountered this, if you forgot to quote your input:
-<pre>
+```python
 >>> write_test(10.0.20.5)
-  File "&lt;stdin&gt;", line 1
+  File "<stdin>", line 1
     write_test(10.0.20.5)
                      ^
 SyntaxError: invalid syntax
-</pre>
+```
 
 Python saw a non-quoted digit, assumed we were giving it a number, saw the first period, considered it to be a `float`, then got confused when a second period showed up.
 
@@ -110,27 +110,27 @@ Python saw a non-quoted digit, assumed we were giving it a number, saw the first
 ## Saving work for later
 
 Using your favorite text editor, copy in the *input* from our last example:
-<pre>
+```python
 def write_test(address):
     print "ping -n 5 -a " + address
     print "tracert " + address + " > trace-result." + address + ".txt"
 
 write_test("10.0.20.5")
 write_test("10.0.21.42")
-</pre>
+```
 
 Save that as write-test.py, or any other helpful name ending in ".py".  Now run `python write-test.py` from the directory where you saved that file.
-This is like telling the Python interpreter to take each line of the file and run it as if you typed it in.  Only now you can just do it again later without typing it all out again.
+This is somewhat like telling the Python interpreter to take each line of the file and run it as if you typed it in.  Only now you can just do it again later without typing it all out again.
 
-To make this a more useful tool in the future, delete the two calls to `write_test` at the end.  So the file only has your function definition.
+To make this a more useful tool in the future, delete the two calls to `write_test` at the end, so the file only has your function definition.
 Now instead run `python -i write-test.py`.  Just like before, your script will be run by the interpreter.  But now you're placed in "inspect"/"interactive" mode right after it finishes, with everything from the script still in existence.  Trying entering `write_test("foo")` now, and you'll see your function run.
 
-<pre>
+```python
 $ python -i write-test.py
 >>> write_test("10.0.20.5")
 ping -n 5 -a 10.0.20.5
 tracert 10.0.20.5 > trace-result.10.0.20.5.txt
-</pre>
+```
 
 Now just copy-paste that printed output either into a .bat file, or straight onto a command line.
 
