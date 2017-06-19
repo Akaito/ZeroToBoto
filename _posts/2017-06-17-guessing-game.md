@@ -271,13 +271,44 @@ True
 
 ---
 
-> BELOW THIS POINT LIES UNFINISHED MATERIAL
+<h2>Variable types, <tt>str</tt> vs. <tt>int</tt></h2>
+
+Why is `32 == '32'` `False`?  32, as an `int`, is represented as an integral number that the CPU can deal with very quickly.
+It has hardware dedicated to performing very basic math operations on it.
+Here's what it actually looks like: <code>0000 0000 &nbsp;0000 0000 &nbsp;0000 0000 &nbsp;0000 0000 &nbsp;0000 0000 &nbsp;0000 0000 &nbsp;0000 0000 &nbsp;0010 0000</code>.
+Don't worry if you're not familiar with binary, it's not necessary to know it just here and now.
+`int`s in 64-bit Python 2 are 8 bytes (hence the 8 * 8 (or 64) zeroes-and-ones above).
+
+While `'32'`, the string, is text encoded in ASCII.  Not a number.
+Each character in a string is one byte.  `'32'` looks like this: <code>0011 0011 &nbsp;0011 0010</code>.
+Neither byte is the number 3, 2, or 30 on their own.
+They're each 50 and 51, the ASCII encodings of `'3'` and `'2'`.
+
+So strings are text that can be of just about any length, and contain just about any character.
+Integers (in 64-bit Python 2) are limited to the range -9,223,372,036,854,775,806 to +9,223,372,036,854,775,807.
+
+Summary: `int` is a computer-friendly "natural" (no fractions) number.  `str` is text, on which you can't perform math.
+(Also if you do want fractions, that's a `float`.  We'll look at that another time.)
+
+Python provides an easy way to *cast* values between the different types in a human-friendly way.
+You basically call a function that is the desired type's name, and pass it the thing you want cast into that type.
+
+```python
+>>> '32' == 32
+False
+>>> '32' == str(32)
+True
+>>> int('32') == 32
+True
+>>> int('3.14')  # Not something an int can represent!
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ValueError: invalid literal for int() with base 10: '3.14'
+```
 
 ---
 
-## Variable types
-
-str vs. int
+> BELOW THIS POINT LIES UNFINISHED MATERIAL
 
 ---
 
