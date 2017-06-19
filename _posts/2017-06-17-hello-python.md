@@ -30,14 +30,14 @@ you're saying "call the function named `sometext`".
 A function is any re-usable chunk of code, usually with a name to make it easy to call.  Functions can take zero or more arguments, and can return
 zero or more results.  Multiple results is not a common feature of many languages.  `exit` can take zero arguments, and it returns zero results.
 
-`print` is also a function like `exit`.  Pre-Python 3 it cheats by being a special case that doesn't need parentheses to be called, for historical reasons.
+`print` is *sort of, almost* a function like `exit` pre-Python 3.  For now, just think of it as a function that cheats by not needing parentheses to be called, for historical reasons.
 `"Hello, Python!"` is the single argument we passed to the <tt>[print](https://docs.python.org/2/library/functions.html?highlight=print#print)</tt> function.  All `print` does is take all arguments it's given, render
 them as text, and spit them back out at us.  Since we gave a [string](https://docs.python.org/2/library/string.html) (anything between
 two double-quotes, or two single-quotes), rendering that as text is completely straight-forward (it already *is* text).
 So the interpreter saw something like `call <function> one-argument <string>`.  Fairly similar to `exit()` above, but this time with one argument.
 
 In fact, even the simple addition we did above is ultimately a function call with two arguments and one result.
-Being able to write it out as `2 + 2` instead of `add(2, 2)` is just a nicety that most languages support.
+Being able to write it out as `2 + 2` instead of `add(2, 2)` is just a nicety that most languages support.  Full list [here](https://docs.python.org/2/library/operator.html#mapping-operators-to-functions), if you're interested.
 Ultimately, the interpreter treats that as something like `call <function> two-arguments <number> <number> expect-one-result`.
 
 ---
@@ -133,4 +133,5 @@ tracert 10.0.20.5 > trace-result.10.0.20.5.txt
 ```
 
 Now just copy-paste that printed output either into a .bat file, or straight onto a command line.
+It's rudimentary, but it can make a task that you have to do repeatedly with slightly different input a little easier.
 

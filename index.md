@@ -1,6 +1,6 @@
-<h1>Info</h1>
 <div class="posts">
-    {% for post in site.posts %}
+	{% assign sorted_posts = site.posts | sort: 'info_order' %}
+    {% for post in sorted_posts %}
     <article class="post">
         <h2>{{ post.info_order }}. <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></h2>
         <div class="entry">
