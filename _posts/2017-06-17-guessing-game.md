@@ -201,6 +201,7 @@ $ _
 ```
 
 `while` is a lot like `if`, but it has this looping behavior added:
+<!-- credit to http://asciiflow.com/ for the nice ASCII flowchart tool -->
 <pre>
 +--------------------------------+
 |                                |
