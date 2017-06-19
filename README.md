@@ -1,7 +1,5 @@
 # ZeroToBoto
-Learn programming with Python from no experience, up to using the AWS Boto module for some tasks.
+Learn enough programming with Python to use AWS' Boto for some tasks.  Starting from no experience.
 
-## Slides
-
-1. [Hello Python](https://gitpitch.com/Akaito/ZeroToBoto/master?p=slides/001_HelloPython)
+[GitHub Page site](https://akaito.github.io/ZeroToBoto/).
 
