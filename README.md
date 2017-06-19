@@ -1,5 +1,6 @@
 # ZeroToBoto
-Learn enough programming with Python to use AWS' Boto for some tasks.  Starting from no experience.
+
+Learn programming with Python from no experience, up to using the AWS Boto module for some tasks.
 
 [GitHub Pages site](https://akaito.github.io/ZeroToBoto/).
 
