@@ -306,6 +306,32 @@ Traceback (most recent call last):
 ValueError: invalid literal for int() with base 10: '3.14'
 ```
 
+If you compare two strings, they'll order lexicographically (this is not true of all languages!).
+Note that uppercase letters come before lower-case letters, because their underlying value in ASCII encodings is lower.
+Here's an [ASCII table](https://duckduckgo.com/?q=ascii+table&iar=images&iax=1&ia=images&iai=https%3A%2F%2Fs-media-cache-ak0.pinimg.com%2F736x%2F95%2Fdd%2Fc8%2F95ddc8a6c29eb2187336c8b5efd31c28.jpg) that shows these values.
+This is why you commonly see URLs with "%20" where spaces might normally be expected.  20 is hex for decimal 32, which is space's value in ASCII.
+
+```python
+>>> 'a' < 'b'
+True
+>>> 'a' < 'B'
+False
+```
+
+Be careful about mixing strings and ints.  You can get some very weird-looking results.
+
+```python
+>>> '500' < 2
+False
+>>> 500 < '2'
+True
+>>> '2' > 500
+True
+```
+
+In short: *any* variable of a numeric type will *always* be "less than" any variable of the `str` type.
+See [this Stack Overflow question](https://stackoverflow.com/questions/3270680/how-does-python-compare-string-and-int) for more, if you're interested.
+
 ---
 
 > BELOW THIS POINT LIES UNFINISHED MATERIAL
@@ -314,7 +340,13 @@ ValueError: invalid literal for int() with base 10: '3.14'
 
 ## Exercise: Giving hints
 
-Too low, too high...
+Update the previous exercise to now give hints of "Too low" or "Too high" when the user misses the computer's number.
+
+### Hints
+
+<ol>
+<li>You can't do math on strings.  Including 
+</ol>
 
 ---
 
