@@ -306,7 +306,7 @@ Traceback (most recent call last):
 ValueError: invalid literal for int() with base 10: '3.14'
 ```
 
-If you compare two strings, they'll order lexicographically (this is not true of all languages!).
+If you compare two strings, they'll order lexicographically (this is not true of all programming languages!).
 Note that uppercase letters come before lower-case letters, because their underlying value in ASCII encodings is lower.
 Here's an [ASCII table](https://duckduckgo.com/?q=ascii+table&iar=images&iax=1&ia=images&iai=https%3A%2F%2Fs-media-cache-ak0.pinimg.com%2F736x%2F95%2Fdd%2Fc8%2F95ddc8a6c29eb2187336c8b5efd31c28.jpg) that shows these values.
 This is why you commonly see URLs with "%20" where spaces might normally be expected.  20 is hex for decimal 32, which is space's value in ASCII.
@@ -334,10 +334,6 @@ See [this Stack Overflow question](https://stackoverflow.com/questions/3270680/h
 
 ---
 
-> BELOW THIS POINT LIES UNFINISHED MATERIAL
-
----
-
 ## Exercise: Giving hints
 
 Update the previous exercise to now give hints of "Too low" or "Too high" when the user misses the computer's number.
@@ -345,8 +341,12 @@ Update the previous exercise to now give hints of "Too low" or "Too high" when t
 ### Hints
 
 <ol>
-<li>You can't do math on strings.  Including 
+<li>You can't do math on strings.  Including less-than/greater-than comparison.</li>
 </ol>
+
+---
+
+> BELOW THIS POINT LIES UNFINISHED MATERIAL
 
 ---
 
