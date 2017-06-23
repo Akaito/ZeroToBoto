@@ -338,11 +338,26 @@ See [this Stack Overflow question](https://stackoverflow.com/questions/3270680/h
 
 Update the previous exercise to now give hints of "Too low" or "Too high" when the user misses the computer's number.
 
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/guessing-game-2.py 
+Guess my number (1-5): 3
+Too low!
+Guess my number (1-5): 5
+Too high!
+Guess my number (1-5): 4
+Correct!  My number was 4
+```
+
 ### Hints
 
 <ol>
 <li>You can't do math on strings.  Including less-than/greater-than comparison.</li>
+<li>Don't worry about validating the user's input yet.  That's a topic for another day.  If they decide to type "wrench" for their guess and get a <a href="https://docs.python.org/2/library/exceptions.html#exceptions.ValueError"><tt>ValueError</tt></a> from Python, that's their problem.</li>
+<li>Storing the computer's number as an <tt>int</tt> instead of a <tt>str</tt> will reduce the amount of casting you have to do.</li>
+<li>If you get really stuck and <em>have</em> to look at the completed example below, try also diff'ing it against the previous completed example to see exactly what changed.</li>
 </ol>
+
+[A completed example.]({{ site.baseurl }}/assets/guessing-game-2.py)
 
 ---
 

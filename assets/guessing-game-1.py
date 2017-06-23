@@ -1,4 +1,4 @@
-# Guessing game (step 0)
+# Guessing game (step 1)
 
 # Store off the computer's target number.
 # We're using a string here, instead of an integer, so we can
