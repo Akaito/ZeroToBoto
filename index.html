@@ -1,3 +1,8 @@
+---
+layout: default
+title: {{ site.name }}
+---
+
 <div class="posts">
 	{% assign sorted_posts = site.posts | sort: 'info_order' %}
     {% for post in sorted_posts %}
