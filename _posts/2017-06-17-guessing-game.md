@@ -415,6 +415,7 @@ Correct!  My number was 96
 
 1. Have the game print how many guesses were made after it's over.
 2. Have the user type in an upper-bound for the random range.
+	- Update the "Guess my number" prompt to match.  Refer back to [Hello, Python!]({{ site.baseurl }}/hello-python) for string concatenation help.  Remember to cast.
 3. Instead of quitting when correct, ask if the user wants to play again.<br/>
 	Hint: Defining more functions is recommended.
 
