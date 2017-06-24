@@ -16,9 +16,9 @@ while user_guess != my_number:
 
     # Help guide the human to the right answer.
     if user_guess < my_number:
-        print "Too low!"
+        print "Too low."
     if user_guess > my_number:
-        print "Too high!"
+        print "Too high."
 
 # This won't be hit until the while loop ends, when the guess matches my_number.
 print "Correct!  My number was", my_number

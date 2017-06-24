@@ -341,9 +341,9 @@ Update the previous exercise to now give hints of "Too low" or "Too high" when t
 ```bash
 chris@CSU:~/work/ZeroToBoto$ python assets/guessing-game-2.py 
 Guess my number (1-5): 3
-Too low!
+Too low.
 Guess my number (1-5): 5
-Too high!
+Too high.
 Guess my number (1-5): 4
 Correct!  My number was 4
 ```
@@ -361,19 +361,58 @@ Correct!  My number was 4
 
 ---
 
-> BELOW THIS POINT LIES UNFINISHED MATERIAL
-
----
-
 ## Importing more functionality
 
-### The random module
+In Python you can <a href="https://docs.python.org/2/tutorial/modules.html"><tt>import</tt></a> other code to make it available to your program.
+You can then call its provided methods as `module_name.function_name()`.
+
+```python
+>>> import random
+>>> random.seed()  # prepare the random number generator
+>>> random.randrange(1, 6, 1)
+1
+>>> random.randrange(1, 6, 1)
+4
+```
+
+Python is well known for its vast ecosystem of modules.
+It has many great built-in modules ([re](https://docs.python.org/2/library/re.html), for regular expressions, is a favorite), and many more can be installed as easily as `pip install <module-name>`.
+
+Modules, in their most basic form, are just other .py files.
+We'll make our own later so future scripts can import our old functionality.
+As you use Python over time, you'll slowly build up a library of re-usable code from your past work.
+This makes future work that much faster, as you won't have to redo past solutions.
 
 ---
 
 ## Exercise: Completed guessing game
 
+Update the previous exercise to have a larger range (1-100), and for the computer to finally have an interesting (random) number, instead of a hard-coded value.
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/guessing-game-complete.py 
+Guess my number (1-100): 42
+Too low.
+Guess my number (1-100): 90
+Too low.
+Guess my number (1-100): 95
+Too low.
+Guess my number (1-100): 98
+Too high.
+Guess my number (1-100): 96
+Correct!  My number was 96
+```
+
 ---
 
 [The complete guessing game.]({{ site.baseurl }}/assets/guessing-game-complete.py)
+
+---
+
+## Extra credit
+
+1. Have the game print how many guesses were made after it's over.
+2. Have the user type in an upper-bound for the random range.
+3. Instead of quitting when correct, ask if the user wants to play again.<br/>
+	Hint: Defining more functions is recommended.
 
