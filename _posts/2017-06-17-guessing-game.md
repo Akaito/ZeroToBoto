@@ -369,9 +369,9 @@ You can then call its provided methods as `module_name.function_name()`.
 ```python
 >>> import random
 >>> random.seed()  # prepare the random number generator
->>> random.randrange(1, 6, 1)
+>>> random.randint(1, 5)
 1
->>> random.randrange(1, 6, 1)
+>>> random.randint(1, 5)
 4
 ```
 
@@ -403,7 +403,9 @@ Guess my number (1-100): 96
 Correct!  My number was 96
 ```
 
----
+### Hints
+
+1. See the documentation on [<tt>randint()</tt>](https://docs.python.org/2/library/random.html#random.randint).
 
 [The complete guessing game.]({{ site.baseurl }}/assets/guessing-game-complete.py)
 

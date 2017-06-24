@@ -6,7 +6,7 @@ import random
 # same random number each time.
 random.seed()
 # Store off the computer's randomized target number.
-my_number = random.randrange(1, 101, 1)
+my_number = random.randint(1, 100)
 
 # We need to declare the user's guess variable to use it in the while loop
 # below, but don't want it to already be correct.  So just store some
