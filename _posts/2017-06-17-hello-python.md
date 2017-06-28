@@ -66,19 +66,19 @@ Once you're back at `>>>`, your function definition statement is complete.  Unti
 $ python
 >>> def write_test(address):
 ...     print "ping -n 5 -a " + address
-...     print "tracert " + address + " > trace-result." + address + ".txt"
+...     print "tracert " + address
 ... 
 >>> write_test("10.0.20.5")
 ping -n 5 -a 10.0.20.5
-tracert 10.0.20.5 > trace-result.10.0.20.5.txt
+tracert 10.0.20.5
 >>> write_test("10.0.21.42")
 ping -n 5 -a 10.0.21.42
-tracert 10.0.21.42 > trace-result.10.0.21.42.txt
+tracert 10.0.21.42
 ```
 
 `write_test` takes one argument (named "address"), prints some stuff out, and returns nothing.
-Printing *is not* returning something.  Printing writes to the "stdout" (standard out) stream.
-This is the same way of communicating with the terminal as you're used to from most programs.  Once we're using saved scripts instead of the interpreter, anything printed with `print` can be redirected to a text file with `foo > result.txt` like you're used to.
+Printing *is not* returning something from a function.  Printing writes to the "stdout" (standard out) stream.
+This stream is a sort of "pipe", where printing feeds the input end, and your terminal is the output end.
 
 `print "ping -n 5 -a " + address`<br/>
 `address` is the name of `write_test`'s one argument.  Here we're assuming it's a string and it can just be added to (appended to) another string.  If someone mis-uses your function and gives a non-string (something note quoted), you'll get an error.
@@ -113,7 +113,7 @@ Using your favorite text editor, copy in the *input* from our last example:
 ```python
 def write_test(address):
     print "ping -n 5 -a " + address
-    print "tracert " + address + " > trace-result." + address + ".txt"
+    print "tracert " + address + "
 
 write_test("10.0.20.5")
 write_test("10.0.21.42")
@@ -129,7 +129,7 @@ Now instead run `python -i write-test.py`.  Just like before, your script will b
 $ python -i write-test.py
 >>> write_test("10.0.20.5")
 ping -n 5 -a 10.0.20.5
-tracert 10.0.20.5 > trace-result.10.0.20.5.txt
+tracert 10.0.20.5
 ```
 
 Now just copy-paste that printed output either into a .bat file, or straight onto a command line.
