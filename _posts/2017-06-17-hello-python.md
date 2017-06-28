@@ -135,3 +135,26 @@ tracert 10.0.20.5 > trace-result.10.0.20.5.txt
 Now just copy-paste that printed output either into a .bat file, or straight onto a command line.
 It's rudimentary, but it can make a task that you have to do repeatedly with slightly different input a little easier.
 
+
+## Exercise: Putting that all together
+
+Write a <tt>write-test.py</tt> plain text file (don't use a Python-specific IDE that helps you with hints).
+This file should be similar to the examples above, but not interactive.  Just write a bunch of "ping" and "tracert" lines.
+The printed result of using this script should look like this:
+
+```bash
+$ python write-test.py
+ping -n 5 -a 10.0.20.5
+tracert10.0.20.5
+ping -n 5 -a 192.168.100.42
+tracert192.168.100.42
+```
+
+If you get stuck and need the answer, or just want to compare, here's [the complete example]({{ site.baseurl }}/assets/hello-python-complete.py).
+
+
+## Extra credit
+
+Instead of copy-pasting stuff printed onto the prompt, redirect the stdout ("standard out") stream to a text file: <code>python write-test.py > run-tests.bat</code>.
+That will take whatever your Python script <tt>print</tt>s, and instead write it to a text file (run-tests.bat in this example).
+

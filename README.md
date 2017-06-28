@@ -16,6 +16,11 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 	Also AWS account setup.
 
 
+### Advanced / second class materials
+
+- Software engineering (as opposed to sysadmin)?  Design principles, data structures, etc.
+
+
 ### More resources
 
 - Pass by assignment: https://stackoverflow.com/questions/986006/how-do-i-pass-a-variable-by-reference
@@ -26,6 +31,7 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 
 ## TODO
 
+- [ ] Ease the jump from "hello" to "ping, tracert", etc.
 - [ ] Move guessing game post CSS to somewhere centralized.
 - [ ] Can Jekyll templating make the spoiler sections easier to write?
 
