@@ -32,6 +32,7 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 ## TODO
 
 - [ ] Ease the jump from "hello" to "ping, tracert", etc.
+- [ ] In first post, link to PEP-8 information.
 - [ ] Move guessing game post CSS to somewhere centralized.
 - [ ] Can Jekyll templating make the spoiler sections easier to write?
 
