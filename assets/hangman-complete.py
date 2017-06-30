@@ -22,26 +22,35 @@ def is_valid_letter_guess(user_input):
 def get_letter_guess():
     # just keep looping forever; only break or return will get us out
     while True:
-        # even though the variable's called "letter", the user could still type anything at all
+        # even though the variable's called "letter", the user could
+        # still type anything at all
         letter = raw_input('Guess a letter: ')
         if is_valid_letter_guess(letter):
             return letter
 
 
-# returns: True if every letter in the target word is accounted for in the user's guesses
+# returns: True if every letter in the target word is accounted for in
+# the user's guesses
 def is_word_revealed():
     # for ... in -style enumerate the characters in the word
     for letter in word:
-        # "in"-style check if a value is in a sequence (a list, in our case)
+        # "in"-style check if a value is in a sequence (a list, in our
+        # case)
         if letter not in guesses:
             # found a letter in the word that hasn't been guessed yet!
             return False
     return True
 
 
+# returns: The target word, each character separated by spaces, with
+# letters not yet guessed shown as underscores.
 def partial_word():
+    # gradually build the revealed/hidden parts of the word
     word_so_far = ''
     for letter in word:
+        # write either the current letter of the target word, or an
+        # underscore, depending on if the user has guessed the letter
+        # yet or not
         if letter in guesses:
             word_so_far += letter
         else:
@@ -50,6 +59,8 @@ def partial_word():
     return word_so_far
 
 
+#=====================================================================
+# Keep playing until the user guesses every letter in the word
 while not is_word_revealed():
     print 'Word so far: {}'.format(partial_word())
     print 'Guesses so far: {}'.format(guesses)
