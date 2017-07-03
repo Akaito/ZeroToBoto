@@ -113,7 +113,7 @@ Using your favorite text editor, copy in the *input* from our last example:
 ```python
 def write_test(address):
     print "ping -n 5 -a " + address
-    print "tracert " + address + "
+    print "tracert " + address
 
 write_test("10.0.20.5")
 write_test("10.0.21.42")
