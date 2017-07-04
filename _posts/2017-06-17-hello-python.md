@@ -145,9 +145,9 @@ The printed result of using this script should look like this:
 ```bash
 $ python write-test.py
 ping -n 5 -a 10.0.20.5
-tracert10.0.20.5
+tracert 10.0.20.5
 ping -n 5 -a 192.168.100.42
-tracert192.168.100.42
+tracert 192.168.100.42
 ```
 
 If you get stuck and need the answer, or just want to compare, here's [the complete example]({{ site.baseurl }}/assets/hello-python-complete.py).
