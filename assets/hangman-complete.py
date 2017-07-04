@@ -6,9 +6,12 @@ word = 'otter'
 guesses = []
 
 
-# user_input: whatever the user typed in (such as from raw_input())
-# returns: True if it's a single, lowercase letter; False otherwise
 def is_valid_letter_guess(user_input):
+    """Validate a user's input for guessing a single letter.
+    
+    user_input -- Whatever the user typed in (such as from raw_input()).
+    Returns if it's a single, lowercase letter; False otherwise.
+    """
     if len(user_input) != 1:
         return False
     # valid if it's a lowercase letter a-z
@@ -17,9 +20,11 @@ def is_valid_letter_guess(user_input):
     return False
 
 
-# keeps prompting the user for input until they give us something valid
-# returns: the user's valid letter guess
 def get_letter_guess():
+    """Prompts the user for input until they give us something valid.
+
+    Returns the user's valid letter guess.
+    """
     # just keep looping forever; only break or return will get us out
     while True:
         # even though the variable's called "letter", the user could
@@ -29,9 +34,10 @@ def get_letter_guess():
             return letter
 
 
-# returns: True if every letter in the target word is accounted for in
-# the user's guesses
 def is_word_revealed():
+    """Returns if every letter in the target word is accounted for in
+    the user's guesses.
+    """
     # for ... in -style enumerate the characters in the word
     for letter in word:
         # "in"-style check if a value is in a sequence (a list, in our
@@ -42,9 +48,10 @@ def is_word_revealed():
     return True
 
 
-# returns: The target word, each character separated by spaces, with
-# letters not yet guessed shown as underscores.
 def partial_word():
+    """Returns the target word, each character separated by spaces, with
+    letters not yet guessed shown as underscores.
+    """
     # gradually build the revealed/hidden parts of the word
     word_so_far = ''
     for letter in word:
