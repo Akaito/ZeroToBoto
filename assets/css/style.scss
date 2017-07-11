@@ -3,28 +3,4 @@
 
 @import "{{ site.theme }}";
 
-// Spoiler open/close CSS from
-// http://jsfiddle.net/Kalashnikov/ZbxfW/
-
-.spoiler {
-	display: none;
-}
-
-.trigger.close {
-	display: none;
-}
-
-.trigger.open:target {
-	display: none;
-}
-
-.trigger.open:target + .trigger.close {
-	display: inline;
-}
-
-.trigger.open:target + .trigger.close + .spoiler {    
-	display: block;
-}
-
-// end spoiler CSS
 

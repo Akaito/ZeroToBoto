@@ -13,24 +13,6 @@ Guess my number (1-100): _
 
 <!-- more -->
 
-<script lang="css">
-.spoiler {
-	    display: none;
-}
-
-.trigger.close {
-	    display: none;
-}
-
-.trigger.open:target {
-	    display: none;
-}
-
-.trigger.open:target + .trigger.close {
-	    display: inline;
-}
-</script>
-
 ```python
 $ python
 >>> foo = 5
