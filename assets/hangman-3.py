@@ -1,4 +1,4 @@
-# hangman-complete.py
+# hangman-3.py
 
 import random
 

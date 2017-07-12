@@ -1,6 +1,4 @@
-# hangman-complete.py
-
-import random
+# hangman-2.py
 
 
 def get_letter_guess():
@@ -49,10 +47,8 @@ def partial_word(word, guesses):
 
 
 #=====================================================================
-# a selection of words to pick from
-word_choices = ['otter', 'disambiguous', 'orange', 'synapse']
 # the word that must be guessed
-target_word = word_choices[random.randint(0, len(word_choices)-1)]
+target_word = 'otter'
 # a list of the letter guesses made
 guesses = []
 

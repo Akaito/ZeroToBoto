@@ -4,7 +4,7 @@ def partial_word(word, revealed):
     """Returns the target word, each character separated by spaces, with
     letters not yet guessed shown as underscores.
     """
-    # gradually build the revealed/hidden parts of the word
+    # gradually build the correctly-guessed/hidden parts of the word
     word_so_far = ''
     for letter in word:
         # write either the current letter of the target word, or a
