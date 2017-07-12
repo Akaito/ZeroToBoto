@@ -1,10 +1,5 @@
 # hangman-complete.py
 
-# the word that must be guessed
-word = 'otter'
-# a list of the letter guesses made
-guesses = []
-
 
 def is_valid_letter_guess(user_input):
     """Validate a user's input for guessing a single letter.
@@ -34,7 +29,7 @@ def get_letter_guess():
             return letter
 
 
-def is_word_revealed():
+def is_word_revealed(word, guesses):
     """Returns if every letter in the target word is accounted for in
     the user's guesses.
     """
@@ -48,7 +43,7 @@ def is_word_revealed():
     return True
 
 
-def partial_word():
+def partial_word(word, revealed):
     """Returns the target word, each character separated by spaces, with
     letters not yet guessed shown as underscores.
     """
@@ -58,22 +53,26 @@ def partial_word():
         # write either the current letter of the target word, or an
         # underscore, depending on if the user has guessed the letter
         # yet or not
-        if letter in guesses:
+        if letter in revealed:
             word_so_far += letter
         else:
-            word_so_far += '_'
-        word_so_far += ' '
+            word_so_far += '.'
     return word_so_far
 
 
 #=====================================================================
+# the word that must be guessed
+target_word = 'otter'
+# a list of the letter guesses made
+guesses = []
+
 # Keep playing until the user guesses every letter in the word
-while not is_word_revealed():
-    print 'Word so far: {}'.format(partial_word())
+while not is_word_revealed(target_word, guesses):
+    print 'Word so far: {}'.format(partial_word(target_word, guesses))
     print 'Guesses so far: {}'.format(guesses)
     guesses.append(get_letter_guess())
     print ''
 
-print 'Found!  The word was "{}"'.format(word)
+print 'Found!  The word was "{}"'.format(target_word)
 print '  Discovered in {} guesses.'.format(len(guesses))
 
