@@ -3,6 +3,15 @@
 import random
 
 
+def get_random_word(dictionary_filepath):
+    """Pulls one word (line) from the given dictionary."""
+    words = []
+    with open(dictionary_filepath) as f:
+        words = f.readlines()
+    # strip whitespace (newline) off the start/end of the string
+    return words[random.randint(0, len(words)-1)].strip()
+
+
 def get_letter_guess():
     """Prompts the user for input until they give us something valid.
 
@@ -49,10 +58,8 @@ def partial_word(word, guesses):
 
 
 #=====================================================================
-# a selection of words to pick from
-word_choices = ['otter', 'disambiguous', 'orange', 'synapse']
 # the word that must be guessed
-target_word = word_choices[random.randint(0, len(word_choices)-1)]
+target_word = get_random_word('hangman-dictionary.txt')
 # a list of the letter guesses made
 guesses = []
 
