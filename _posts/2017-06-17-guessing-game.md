@@ -222,7 +222,7 @@ True
 {% include spoiler-hint.html major=1 minor=2
 	summary="<code>NameError: name 'user_guess' is not defined</code>"
 	details="
-		Before you can test a variable for anything, it needs some value stored in it so it exists (is defined).  Before your <code>while</code> test, assign any-old not-correct thing to the variable.  <code>user_guess = "can't be a right answer"</code>.
+		Before you can test a variable for anything, it needs some value stored in it so it exists (is defined).  Before your <code>while</code> test, assign any-old not-correct thing to the variable.  <code>user_guess = \"can't be a right answer\"</code>.
 " %}
 <li>You <em>might</em> be able to complete this by adding two lines, and indenting one other.</li>
 </ol>
