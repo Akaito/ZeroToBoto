@@ -23,7 +23,8 @@ class Character(object):
     def attack_something(self, target, attack=None):
         if attack is None:
             attack = random.choice(self.attacks.values())
-            #print '  DEBUG: Chose attack {} at random from {}'.format(attack, self.attacks)
+        elif type(attack) == str:
+            attack = self.attacks[attack]
         attack.perform(self, target)
 
 
@@ -37,7 +38,7 @@ class Attack(object):
 
     def perform(self, source, target):
         target.hp = min(max(0, target.hp - self.damage), target.hp_max)
-        print '{} used {} on {}'.format(source, self, target)
+        print '{} used {} on {}'.format(source.name, self, target)
 
 
 class AttackSlash(Attack):
@@ -71,15 +72,22 @@ class AttackExplode(Attack):
     def __init__(self):
         Attack.__init__(self, 'Explode', 9)
 
+    def perform(self, source, target):
+        Attack.perform(self, source, target)
+        Attack.perform(self, source, source)
+
 
 #==================================================================
 monsters = {}
-player = Character('Alice', 20, [AttackSlash()])
+player = Character('Hiro', 20, [AttackSlash(), AttackHeal()])
 
 # characters['Bob'] = Character('Bob', 12, TEAM_PLAYER, [AttackPunch(), AttackHeal()])
 monsters['SlimeA'] = Character('SlimeA', 5, [AttackAcid()])
 monsters['SlimeB'] = Character('SlimeB', 5, [AttackAcid(), AttackExplode()])
 
 player.attack_something(monsters['SlimeB'])
-monsters['SlimeB'].attack_something(player)
+monsters['SlimeB'].attack_something(player, attack='Acid')
+monsters['SlimeB'].attack_something(player, attack='Acid')
+monsters['SlimeB'].attack_something(player, attack='Explode')
+player.attack_something(player, 'Heal')
 
