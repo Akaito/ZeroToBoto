@@ -15,11 +15,6 @@ class Character:
     def __str__(self):
         return '{} ({}/{} hp)'.format(self.name, self.hp, self.hp_max)
 
-    def get_attack_list(self):
-        result = []
-        for atk in self.attacks:
-            result.append(str(atk))
-
     def attack_something(self, target, attack=None):
         if self.hp <= 0:
             return
