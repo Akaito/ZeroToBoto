@@ -15,7 +15,14 @@ class Character:
     def __str__(self):
         return '{} ({}/{} hp)'.format(self.name, self.hp, self.hp_max)
 
+    def get_attack_list(self):
+        result = []
+        for atk in self.attacks:
+            result.append(str(atk))
+
     def attack_something(self, target, attack=None):
+        if self.hp <= 0:
+            return
         if attack is None:
             attack = random.choice(self.attacks.values())
         elif type(attack) == str:
@@ -71,39 +78,48 @@ class AttackDisintegrate(Attack):
 
 
 #==================================================================
-player = Character('Hiro', 20, [Attack('Slash', 4), AttackHeal()])
-monsters = {}
+player_name = 'Hiro'
+player_key = player_name.lower()
 
-monsters['slimea'] = CharSlime('SlimeA', 5, False)
-monsters['slimeb'] = CharSlime('SlimeB', 5, True)
+combatants = {}
+combatants[player_key] = Character(player_name, 20, [Attack('Slash', 4), AttackHeal()])
+combatants['slimea'] = CharSlime('Slime A', 5, False)
+combatants['slimeb'] = CharSlime('Slime B', 5, True)
 
-while player.hp > 0 and len(monsters) > 0:
+# keep doing combat while player is alive, and they're not alone
+while player_key in combatants.keys() and len(combatants) > 1:
+    # write status of combat
+    print 'Your attacks:'
+    for atk in sorted(combatants[player_key].attacks.values()):
+            print '  {}'.format(atk)
+    print 'Remaining combatants:'
+    for char in sorted(combatants.values()):
+        print '  ' + str(char)
     # player attacks a monster
-    print 'Your attacks: {}'.format(sorted(player.attacks.keys()))
-    print 'Remaining monsters: {}'.format(sorted(monsters.keys()))
     atk_name = ''
     monster_name = ''
-    while atk_name not in player.attacks.keys() or (monster_name not in monsters.keys() and monster_name != 'self'):
-        atk_name, monster_name = raw_input('<attack> <<monster>|self>: ').split(' ')
-    if monster_name == 'self':
-        player.attack_something(player, atk_name)
-    else:
-        player.attack_something(monsters[monster_name], atk_name)
+    while atk_name not in combatants[player_key].attacks.keys() or monster_name not in combatants.keys():
+        atk_name, monster_name = raw_input('<attack> <combatant>: ').split(' ')
+    combatants[player_key].attack_something(combatants[monster_name], atk_name)
 
     # monsters attack player
-    for monster in monsters.values():
-        monster.attack_something(player)
+    for key, char in combatants.iteritems():
+        if key == player_key:
+            continue
+        char.attack_something(combatants[player_key])
 
-    # clean up dead monsters
+    # clean up dead combatants
     dead_monsters = []
-    for key, monster in monsters.iteritems():
+    for key, monster in combatants.iteritems():
         if monster.hp <= 0:
             dead_monsters.append(key)
+            print '{} has died!'.format(monster.name)
     for key in dead_monsters:
-        del monsters[key]
+        del combatants[key]
+    print ''
 
-if player.hp <= 0:
-    print 'You have died.'
+if player_key not in combatants.keys():
+    print 'Failure.'
 else:
     print 'Cleared!'
 
