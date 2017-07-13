@@ -31,7 +31,8 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 
 ## TODO
 
-- [ ] Mention how to type check types from within the script (type()).
+- [ ] guessing-game: Mention how to type check types from within the script (type()).
+- [ ] hangman: Have the user's guesses print out in alphabetical order.
 
 - [ ] Ease the jump from "hello" to "ping, tracert", etc.
 - [ ] In first post, link to PEP-8 information.
