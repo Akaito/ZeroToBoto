@@ -12,6 +12,9 @@ class Character:
         for attack in attacks:
             self.attacks[attack.name.lower()] = attack
 
+    def __del__(self):
+        print '~{} was del\'d!'.format(self)
+
     def __str__(self):
         return '{} ({}/{} hp)'.format(self.name, self.hp, self.hp_max)
 
