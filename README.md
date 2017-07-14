@@ -7,9 +7,10 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 
 ## Possible "course" layout
 
+- [x] Install Python.
 - [x] Just print something, and functions.
 - [x] Variables, user input, casting str/int, if / while, modules (barely).
-- [ ] Lists.
+- [x] Lists.
 - [ ] Pass by "value"/"ref" (really mutable/immutable types).
 - [ ] Custom types.
 - [ ] Secret keys and S3 upload/download.
@@ -33,6 +34,10 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 
 - [ ] guessing-game: Mention how to type check types from within the script (type()).
 - [ ] hangman: Have the user's guesses print out in alphabetical order.
+
+- [ ] rpg/classes: Use classes to handle parsing a csv of the encounter?
+- [ ] rpg/classes: Think more about boto; what's their justification for classes?
+- [ ] rpg/classes: Make each RPG "class" a literal class?  Valid use of classes?
 
 - [ ] Ease the jump from "hello" to "ping, tracert", etc.
 - [ ] In first post, link to PEP-8 information.
