@@ -49,16 +49,6 @@ woof
 woof
 woof
 meow
->>> fido
-<__main__.Dog object at 0x7fca85abc310>
->>> type(fido)
-<class '__main__.Dog'>
->>> Dog
-<class __main__.Dog>
->>> type(Dog)
-<type 'type'>
->>> type(fido) == Dog
-True
 ```
 
 When you want to use a class, you create a new a new *object* of that class' *type* by giving the class name followed by parentheses.
@@ -68,6 +58,11 @@ To call a class' function, it's `object_name.function_name()`.
 Similar to using a function defined within a module (`random.randint()`).
 Only here, the object you're calling any of its functions on actually gets passed as the first parameter to that function.
 This first parameter is traditionally named "self", and you should absolutely follow that practice.
+
+> If you're coming from other languages where this example requires a common base class <tt>Animal</tt> between these two types, this is a bit different in Python.
+> Python is strongly typed (Dog is not Cat), but you can also mix and match types about as much as you want.
+> So long as a type quacks like a duck and walks like a duck, to Python, it may as well be.
+> ... Unless you specifically ask something like `isinstance(fido, Duck())`.
 
 ---
 
@@ -118,25 +113,35 @@ Even though Chihuahua inherits from Dog, it gives a new definition to <tt>speak<
 This new definition is only present in objects of type Chihuahua, and any other classes that inherit from Chihuahua.
 Instances of Dog and GermanShepherd will still say 'woof'.
 
+---
 
-Above, notice all functions within a class take the parameter `self`.
-`self` is always the instance of the object whose function is being called.
-We didn't use `self` in this example-- the function just prints a message no matter which instance it's called on-- but we will in the future.
-Naming this first paremeter "self" is just a convention-- you can call it whatever you want-- but please call it "self" for the sake of consistency with basically *all* other Python code out there.
+## Checking types
 
-> If you're coming from other languages where this example requires a common base class <tt>Animal</tt> between these two types, this is a bit different in Python.
-> Python is strongly typed (Dog is not Cat), but you can also mix and match types about as much as you want.
-> So long as a type quacks like a duck and walks like a duck, to Python, it may as well be.
-> ... Unless you specifically ask something like `isinstance(fido, Duck())`.
+```python
+>>> fido
+<__main__.Dog object at 0x7fca85abc310>
+>>> type(fido)
+<class '__main__.Dog'>
+>>> Dog
+<class '__main__.Dog'>
+>>> type(fido) == Dog
+True
+>>> type(Dog)
+<type 'type'>
+```
 
+"\_\_main\_\_" is the special "module" name given to our script when its file is executed directly from Python or we're using the Python interpretor directly.
+So in the above where you see `__main__.Dog`, that's of the format "&lt;module_name&gt;.&lt;type_name&gt;".
+You can see that the `type()` of an object is exactly the class it was instantiated from.
+The type of a class/type you've defined is, sensibly enough, `type`.
+`type` is just a type of variable; much like `str` and `int`.
 
-Classes are a convenient way to bundle behaviors and data together.
-- You (can) describe the way some *type of thing* works by defining a class and giving it functions.
-- You (can) also describe what data personalizes and lives with an *instance* of that class, and manipulate it over time.
+---
 
-For example, you could have a RemoteMachine class with functions like connect(), ping(), disconnect(), restart(), etc.
-An individual instance of that class would hold its own IP address, maybe credentials, connected/disconnected state, etc.
-That way, you could have multiple machines you're talking to at once, that can all easily repeat the same behavior, but instance of the RemoteMachine class knows what IP to send its pings to.
+## <tt>self</tt>
+
+`self` is always the object you're calling the class' function with.
+We didn't use `self` in these Dog/Cat examples; the function "speak" just prints a message no matter which instance it's called on.
 
 ```python
 class RemoteMachine:
@@ -149,18 +154,54 @@ class RemoteMachine:
 ```
 
 ```bash
->>> machines = []
->>> machines.append(RemoteMachine('127.0.0.1'))
->>> machines.append(RemoteMachine('10.0.0.1'))
+>>> machines = [
+...     RemoteMachine('127.0.0.1'),
+...     RemoteMachine('10.0.0.1')
+... ]
 >>> for machine in machines:
 ...        machine.ping()
 ...
 0.09
-12.2
+2.2
 ```
 
-Above, the `ping()` function is a part of the `RemoteMachine` class.
-You
+`__init__` is a special function.
+Whenever an object is being instantiated, its type's `__init__` function is called; again passing the object as the first parameter, "self".
+This lets you setup objects of your type with some default values and variables assigned.
+It's very often a good idea to give your types an `__init__` function.
+
+You can also give `__init__` more parameters than just <tt>self</tt>, and then you can take in more parameters during object creation.
+Note `RemoteMachine('10.0.0.1')` *looks* like you're just giving it one parameter, while the function expects two ("self" and "ip").
+But, because of that special "self" behavior on class functions, you're actually giving it the object, *then* whatever extra arguments you filled in.
+
+In Python, assigning to a variable makes it exist.
+So assigning to `self.ip` in the RemoteMachine `__init__` function makes whatever object "self" happens to be have a variable named "ip", and gives it some value.
+Don't forget to prefix your object variable access with `self.`!
+
+All this special <tt>self</tt> behavior really boils down to syntactic sugar.
+`fido.speak()` is exactly the same as `Dog.speak(fido)`.
+It's just a function that exists within some scope (the Dog class; as opposed to a module or other), and it takes one parameter.
+Its one parameter is *expected* to be an object of the Dog class.
+
+---
+
+## Exercise: Create a class
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/rpg-0.py 
+Hiro (20/20 hp)
+Slime A (5/5 hp)
+Slime B (5/5 hp)
+```
+
+Create a <tt>Character</tt> class that has a name, current HP, and max HP, all tracked per instance of that class.
+Give that class the special function `__str__(self)`.
+`__str__` is what Python calls on an object when you ask to convert it to a string, such as for printing.
+This is a very useful method to add to your classes.
+
+Create three character objects, and print each of them out in a human-friendly way (like above).
+
+[The completed example.]({{ site.baseurl }}{% link /assets/rpg-0.py %})
 
 ---
 
