@@ -264,17 +264,17 @@ class BigRedDog(Dog):
 ```
 
 Recall class functions are just like normal functions in a different scope, plus the <tt>self</tt> syntactic sugar.
-You can call functions from your parent class if you need to make use of them.
+You can call functions from your parent class (or, really, any class) if you need to make use of them.
 
 > If you're coming from other languages, you may see the problem with directly saying `Dog.__init__()`.
-> What happens if BigRedDog is changed to inherit from Cat or object instead?
+> What happens if BigRedDog is changed to inherit from Cat or <tt>object</tt> instead?
 > In other languages, this would be an issue.
 > In Python, it's still just a function, and data is still named (rather than addressed).
 
 There is a fancier way to call a superclass function to prevent the possible future headache if your superclass changes.
 It's recommended that you do this fancier thing, but don't fret too much if this looks weird.
 It's using a somewhat advanced Python feature.
-This is one area where things are a little more awkward with Python than with other languages.
+This is one area where things are a little more awkward with Python than with some other languages.
 
 ```python
 class Dog(object):
@@ -289,8 +289,10 @@ class BigRedDog(Dog):
 You can read more about `super()` [here](https://docs.python.org/2.7/library/functions.html#super).
 Why don't you have to pass "self" to the `__init__` call?
 Because `super()` is a weird "proxy object"; read more in that link if desired.
+Just think of `super()` as returning <tt>self</tt>, but looking at <tt>self</tt> as if it were its superclass' type instead.
+Then that `__init__()` call you see is just using the previously mentioned syntactic sugar to not have to pass anything extra to it to make its <tt>self</tt> work.
 
-If you're using Python 3, `super()` is a bit nicer to use:
+If you're using Python 3, `super()` is a bit easier to use:
 
 ```python
 class BigRedDog(Dog):
@@ -299,6 +301,44 @@ class BigRedDog(Dog):
 ```
 
 ---
+
+## Exercise: Adding different ability behaviors
+
+```python
+chris@CSU:~/work/ZeroToBoto$ python assets/rpg-3.py 
+Hiro (20/20 hp)
+Slime A (5/5 hp)
+Slime B (5/5 hp)
+ 
+Slime A used Acid (2 damage) on Hiro (18/20 hp)
+Slime A used Acid (3 damage) on Hiro (15/20 hp)
+Slime B used Acid (2 damage) on Hiro (13/20 hp)
+Slime C used Disintegrate (9 damage) on Hiro (4/20 hp)
+Slime C used Disintegrate (9 damage) on Slime C (0/5 hp)
+Hiro used Heal (8 healing) on Hiro (12/20 hp)
+```
+
+Create three new kinds of abilities.
+1. Healing.
+	- Increase HP by an amount, capped at the target character's maximum HP.
+2. Ability will increase the amount of damage it deals each time it's used.
+    - Be mindful that your damage growth is stored per-object/-instance.  Not per class.
+	- Give two characters this ability.  Have one use it twice, *then* the other use it once.  Make sure the first character's use doesn't increase the second's damage dealt.
+3. Ability attacks twice.
+	- The example attacks the given target, then attacks itself.  You can change this up a little if you want.  But make sure it attacks twice.
+
+In all cases, and in programming in general, try not to repeat yourself.
+The point of things is to have the computer handle repetitive tasks, not a human.
+You ideally want to have only one place where HP is adjusted by ability damage.
+Have one place where that one ability's damage grows.
+And so on.
+
+### Hints
+
+1. Healing is the negation of damage.
+2. Remember to use <tt>self</tt> accordingly.
+3. Calling on help from superclasses can be very handy.
+
 
 [The completed example.]({{ site.baseurl }}{% link /assets/rpg-3.py %})
 

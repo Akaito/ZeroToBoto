@@ -50,8 +50,8 @@ class Ability(object):
 class AbilityStrongerEveryUse(Ability):
     """Special variety of an attack that gets stronger every use."""
 
-    def __init__(self, name, growth):
-        super(AbilityStrongerEveryUse, self).__init__(name, 2)
+    def __init__(self, name, damage, growth):
+        super(AbilityStrongerEveryUse, self).__init__(name, damage)
         self.growth = growth
 
     def perform(self, source, target):
@@ -70,8 +70,8 @@ class AbilityHeal(Ability):
 
 #==================================================================
 class AbilityDisintegrate(Ability):
-    def __init__(self):
-        super(AbilityDisintegrate, self).__init__('Disintegrate', 9)
+    def __init__(self, damage):
+        super(AbilityDisintegrate, self).__init__('Disintegrate', damage)
 
     def perform(self, source, target):
         super(AbilityDisintegrate, self).perform(source, target)
@@ -80,14 +80,18 @@ class AbilityDisintegrate(Ability):
 
 #==================================================================
 player = Character('Hiro', 20, AbilityHeal('Heal', 8))
-slimea = Character('Slime A', 5, AbilityStrongerEveryUse('Acid', 2))
-slimeb = Character('Slime B', 5, AbilityDisintegrate())
+slimea = Character('Slime A', 5, AbilityStrongerEveryUse('Acid', 2, 1))
+slimeb = Character('Slime B', 5, AbilityStrongerEveryUse('Acid', 2, 1))
+slimec = Character('Slime C', 5, AbilityDisintegrate(9))
 
 print player
 print slimea
 print slimeb
 print ''
+
+slimea.attack_something(player)
 slimea.attack_something(player)
 slimeb.attack_something(player)
+slimec.attack_something(player)
 player.attack_something(player)
 
