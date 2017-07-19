@@ -24,3 +24,13 @@ Slime B has died!
 
 [The complete RPG combat.]({{ site.baseurl }}{% link /assets/rpg-complete.py %})
 
+---
+
+## Extra credit
+
+1. Be more informative/helpful when the player doesn't know the key names for monsters.
+2. Give attacks a chance to miss (accuracy rating).  Print it out when listing attacks.  Or, give them a chance to critically hit for double damage.
+3. Make up a new attack type, and implement it.  You may have to change the Attack class and/or the combat code.  Suggestions:
+	- Attack all targets in a list.
+	- Make an attack have a certain number of charges available (think items or mana).
+
