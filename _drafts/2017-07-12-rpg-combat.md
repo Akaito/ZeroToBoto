@@ -25,13 +25,13 @@ Slime B has died!
 Classes are very useful for having a collection of stuff that agrees to some kind of way of interacting with it, and writing very simple code that uses that means of interacting, without necessarily knowing what it's using.
 Sounds weird, but it will make sense over time.
 Some basic code can operate on a list of *things*, and let them drive what that actually means.
-This lets you easily extend some functionality you have later on by just creating one new class and stick an instance of it in a list.
+This lets you easily extend some functionality you have later on by just creating one new class.
 *Without* needing to touch the code you've already debugged and figured out is just right for the basic intent of the program.
 
 ```python
-class Dog(object):
-    def speak(self):
-        print 'woof'
+class Dog(object):  # defining a new class/type
+    def speak(self):  # defining a function within that class
+        print 'woof'  # function's implementation
 
 class Cat(object):
     def speak(self):
@@ -61,8 +61,63 @@ meow
 True
 ```
 
-When you want to use a class, you create a new <strong><em><u>instance</u></em></strong> of that class (a new *object* of that class' type) by giving the class name followed by parentheses.
-It's like there's a function that is the class' name, which gives you back a new one of that class.
+When you want to use a class, you create a new a new *object* of that class' *type* by giving the class name followed by parentheses.
+It's like there's a function that is the class' name, which gives you back a new object its type.
+
+To call a class' function, it's `object_name.function_name()`.
+Similar to using a function defined within a module (`random.randint()`).
+Only here, the object you're calling any of its functions on actually gets passed as the first parameter to that function.
+This first parameter is traditionally named "self", and you should absolutely follow that practice.
+
+---
+
+## Inheritance
+
+`class Dog:` vs. `class Dog(object):`.
+Classes can be defined in Python in either of these two ways.
+The first is the older way, the second is the newer way.
+Other than compatibility with older code, I don't know why you'd want to do things in the first way.
+The second way works out much better for checking the types of objects, etc.
+In the second way, you're saying that Dog "inherits from" or "is a subclass of" the <tt>object</tt> type.
+`object` is the base-most type that most everything else inherits from.
+If a type inherits from another type, the subclass also has all of the parent class' stuff.
+
+```python
+class GermanShepherd(Dog):
+    pass  # nothing to do here; just let us complete the class definition
+```
+
+```python
+>>> GermanShepherd().speak()
+woof
+```
+
+The `pass` keyword is very useful for stubbing code in when you know something will eventually be there in the future.
+It just means "I don't want to do anything here, but Python needs to see something indented here (not a comment) to make this valid.
+So I explicitly <tt>pass</tt> on doing anything at this point."
+It's not specifically related to inheritance in any kind of special way.
+
+---
+
+## Overriding behavior
+
+```python
+class Chihuahua(Dog):
+    def speak(self):
+        print 'yap'
+```
+
+```python
+>>> Chihuahua().speak()
+yap
+>>> GermanShepherd().speak()
+woof
+```
+
+Even though Chihuahua inherits from Dog, it gives a new definition to <tt>speak</tt>.
+This new definition is only present in objects of type Chihuahua, and any other classes that inherit from Chihuahua.
+Instances of Dog and GermanShepherd will still say 'woof'.
+
 
 Above, notice all functions within a class take the parameter `self`.
 `self` is always the instance of the object whose function is being called.
