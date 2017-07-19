@@ -13,6 +13,7 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 - [x] Lists.
 - [ ] Pass by "value"/"ref" (really mutable/immutable types).
 - [ ] Custom types.
+	Web scraper example?
 - [ ] Secret keys and S3 upload/download.
 	Also AWS account setup.
 
