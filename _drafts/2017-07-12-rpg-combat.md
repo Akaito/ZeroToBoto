@@ -70,9 +70,8 @@ This first parameter is traditionally named "self", and you should absolutely fo
 
 `class Dog:` vs. `class Dog(object):`.
 Classes can be defined in Python in either of these two ways.
-The first is the older way, the second is the newer way.
-Other than compatibility with older code, I don't know why you'd want to do things in the first way.
-The second way works out much better for checking the types of objects, etc.
+The first is an old-style class; the second a new-style class.
+Other than for specific compatibility issues with older code, you should make [new-style classes](https://docs.python.org/2.7/glossary.html#term-new-style-class) that inherit from <tt>object</tt>.
 In the second way, you're saying that Dog "inherits from" or "is a subclass of" the <tt>object</tt> type.
 `object` is the base-most type that most everything else inherits from.
 If a type inherits from another type, the subclass also has all of the parent class' stuff.
@@ -249,6 +248,59 @@ The characters shouldn't care about the details of what their abilities do.
 </ol>
 
 [The completed example.]({{ site.baseurl }}{% link /assets/rpg-2.py %})
+
+---
+
+## Calling partent/superclass functions
+
+```python
+class Dog(object):
+    def __init__(self, fur_color):
+        self.fur_color = fur_color
+
+class BigRedDog(Dog):
+    def __init__(self):
+        Dog.__init__(self, 'red')
+```
+
+Recall class functions are just like normal functions in a different scope, plus the <tt>self</tt> syntactic sugar.
+You can call functions from your parent class if you need to make use of them.
+
+> If you're coming from other languages, you may see the problem with directly saying `Dog.__init__()`.
+> What happens if BigRedDog is changed to inherit from Cat or object instead?
+> In other languages, this would be an issue.
+> In Python, it's still just a function, and data is still named (rather than addressed).
+
+There is a fancier way to call a superclass function to prevent the possible future headache if your superclass changes.
+It's recommended that you do this fancier thing, but don't fret too much if this looks weird.
+It's using a somewhat advanced Python feature.
+This is one area where things are a little more awkward with Python than with other languages.
+
+```python
+class Dog(object):
+    def __init__(self, fur_color):
+        self.fur_color = fur_color
+
+class BigRedDog(Dog):
+    def __init__(self):
+        super(BigRedDog, self).__init__('red')
+```
+
+You can read more about `super()` [here](https://docs.python.org/2.7/library/functions.html#super).
+Why don't you have to pass "self" to the `__init__` call?
+Because `super()` is a weird "proxy object"; read more in that link if desired.
+
+If you're using Python 3, `super()` is a bit nicer to use:
+
+```python
+class BigRedDog(Dog):
+    def __init__(self):
+        super().__init__('red')
+```
+
+---
+
+[The completed example.]({{ site.baseurl }}{% link /assets/rpg-3.py %})
 
 ---
 
