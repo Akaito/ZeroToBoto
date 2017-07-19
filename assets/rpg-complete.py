@@ -41,7 +41,6 @@ class Character:
 
 
 #==================================================================
-# 
 class CharSlime(Character):
     """Just an easy way to make basic slimes that all have the Acid attack.
     Not necessarily a good design in terms of which classes you should have."""

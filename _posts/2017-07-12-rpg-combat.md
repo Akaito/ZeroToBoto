@@ -320,12 +320,13 @@ Hiro used Heal (8 healing) on Hiro (12/20 hp)
 
 Create three new kinds of abilities.
 1. Healing.
-	- Increase HP by an amount, capped at the target character's maximum HP.
+    - Increase HP by an amount, capped at the target character's maximum HP.
+    - When used, this ability should print out a different message to indicate that it's healing (not damaging).
 2. Ability will increase the amount of damage it deals each time it's used.
     - Be mindful that your damage growth is stored per-object/-instance.  Not per class.
-	- Give two characters this ability.  Have one use it twice, *then* the other use it once.  Make sure the first character's use doesn't increase the second's damage dealt.
+    - Give two characters this ability.  Have one use it twice, *then* the other use it once.  Make sure the first character's use doesn't increase the second's damage dealt.
 3. Ability attacks twice.
-	- The example attacks the given target, then attacks itself.  You can change this up a little if you want.  But make sure it attacks twice.
+    - The example attacks the given target, then attacks itself.  You can change this up a little if you want.  But make sure it attacks twice.
 
 In all cases, and in programming in general, try not to repeat yourself.
 The point of things is to have the computer handle repetitive tasks, not a human.
@@ -343,6 +344,102 @@ And so on.
 [The completed example.]({{ site.baseurl }}{% link /assets/rpg-3.py %})
 
 ---
+
+## Dictionaries
+
+```python
+>>> stats = {}
+>>> stats['hp'] = 14
+>>> stats['dexterity'] = 7
+>>> print stats
+{'dexterity': 7, 'hp': 14}
+```
+
+```python
+>>> class Turtle(object):
+...     def __init__(self, color):
+...         self.color = color
+...
+>>> turtles = {'leonardo': Turtle('blue'), 'donatello': Turtle('purple')}
+>>> turtles['michaelangelo'] = Turtle('orange')
+>>> turtles['raphael'] = Turtle('red')
+>>> print turtles['donatello'].color
+purple
+```
+
+Dictionaries are collections of things, somewhat like lists, but you give each item in a dictionary a unique name.
+More generically, its name is its "key", which can be of nearly any type.
+Items are easy to access at random by *indexing* the dictionary with an item's key.
+However, dictionaries don't have a specific human-ey order to them.
+So if you're enumerating items in a dictionary without using their keys, rely on not getting them in a predictable order.
+
+Dictionaries use curly braces `{}`, as opposed to lists' square brackets `[]`.
+You can create them empty (like "stats" above), or with some items already in them (like "turtles" above).
+If defining key-value pairs when you declare the dictionary, the format is `key: value,key2: value2`, and so on.
+To add key-value pairs into a dictionary (officially the `dict` type) later on, index the dictionary with the desired key, and assign to it the desired value.
+
+---
+
+## Exercise: Making it interactive
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/rpg-complete.py 
+Your abilities:
+  Slash (4 damage)
+  Heal (8 healing)
+Remaining combatants:
+  Hiro (20/20 hp)
+  Slime A (5/5 hp)
+  Slime B (5/5 hp)
+<ability> <combatant>: slash slimea
+Hiro used Slash (4 damage) on Slime A (1/5 hp)
+Slime B used Acid (2 damage) on Hiro (18/20 hp)
+Slime A used Acid (2 damage) on Hiro (16/20 hp)
+ 
+Your abilities:
+  Slash (4 damage)
+  Heal (8 healing)
+Remaining combatants:
+  Hiro (16/20 hp)
+  Slime A (1/5 hp)
+  Slime B (5/5 hp)
+<ability> <combatant>: slash slimea
+Hiro used Slash (4 damage) on Slime A (0/5 hp)
+Slime B used Acid (3 damage) on Hiro (13/20 hp)
+Slime A has died!
+ 
+Your abilities:
+  Slash (4 damage)
+  Heal (8 healing)
+Remaining combatants:
+  Hiro (13/20 hp)
+  Slime B (5/5 hp)
+<ability> <combatant>: heal hiro
+Hiro used Heal (8 healing) on Hiro (20/20 hp)
+Slime B used Disintegrate (9 damage) on Hiro (11/20 hp)
+Slime B used Disintegrate (9 damage) on Slime B (0/5 hp)
+Slime B has died!
+ 
+Cleared!
+```
+
+Use what you learned from the guessing game and hangman to make a turn-based combat encounter.
+The user should input an ability name, and a target to use it on.
+Notice from the example usage above I'm calling targets "slimea", "hiro", etc.
+You can do hand-set keys like that, or do some smart conversion of their name (`.lower().strip()`, and so on) to make things more dynamic.
+That is, easier to change, because you repeat yourself less often.
+
+In addition to making it interactive, you'll notice characters now have multiple abilities at their disposal.
+
+The combat should end only when the player is the only one left standing, *or* the player's HP is at or below 0.
+For the enemies, just make them pick a random attack from the set they have available, and always target the player.
+
+### Hints
+
+1. The random module has a function called `choose()` you should look up.
+2. Watch out for keys that aren't actually in dictionaries.  Things are case-sensitive!
+3. This is a somewhat significant step up from the previous exercise, and from hangman.  Don't expect it to be immediately obvious.
+	Keep at it, and maybe try breaking out pieces you can test on their own before coming back to add them to your combat encounter program.
 
 [The complete RPG combat.]({{ site.baseurl }}{% link /assets/rpg-complete.py %})
 
