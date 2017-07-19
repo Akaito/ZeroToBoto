@@ -191,7 +191,6 @@ Its one parameter is *expected* to be an object of the Dog class.
 chris@CSU:~/work/ZeroToBoto$ python assets/rpg-0.py 
 Hiro (20/20 hp)
 Slime A (5/5 hp)
-Slime B (5/5 hp)
 ```
 
 Create a <tt>Character</tt> class that has a name, current HP, and max HP, all tracked per instance of that class.
@@ -199,9 +198,24 @@ Give that class the special function `__str__(self)`.
 `__str__` is what Python calls on an object when you ask to convert it to a string, such as for printing.
 This is a very useful method to add to your classes.
 
-Create three character objects, and print each of them out in a human-friendly way (like above).
+Create a couple of character objects, and print each of them out in a human-friendly way (like above).
 
 [The completed example.]({{ site.baseurl }}{% link /assets/rpg-0.py %})
+
+---
+
+## Exercise: Adding abilities
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/rpg-1.py 
+Hiro (20/20 hp) has Slash (5 damage)
+Slime A (5/5 hp) has Acid (2 damage)
+```
+
+Create a new <tt>Ability</tt> class that has a name and an integer amount of damage it deals.
+Add an ability to the <tt>Character</tt> class, so each Character object knows what its Ability is.
+Print out something like "&lt;character&gt; has &lt;ability&gt;" for each character, getting its ability from some variable stored on the individual Character object.
+The printing can be done either in a class function or just out in the main script area.
 
 ---
 

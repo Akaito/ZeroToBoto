@@ -9,13 +9,14 @@ import random
 
 #==================================================================
 class Character:
-    def __init__(self, name, hp, attacks):
+    def __init__(self, name, hp, abilities):
         self.name = name
         self.hp = hp
         self.hp_max = hp
-        self.attacks = {}
-        for attack in attacks:
-            self.attacks[attack.name.lower()] = attack
+        self.abilities = {}
+        for ability in abilities:
+            # Make abilities lazy/easy to use; just type their lowercase names.
+            self.abilities[ability.name.lower()] = ability
 
     # Special function that Python uses when casting us to a string.
     # There's also "__repr__" for smaller "representations".  This is usually
@@ -23,45 +24,47 @@ class Character:
     def __str__(self):
         return '{} ({}/{} hp)'.format(self.name, self.hp, self.hp_max)
 
-    def attack_something(self, target, attack=None):
-        # Don't let dead things attack.
+    def attack_something(self, target, ability=None):
+        # Don't let dead things use abilities.
         if self.hp <= 0:
             return
-        # If we're called with no attack set, just pick one we can do at
+        # If we're called with no ability set, just pick one we can do at
         # random.
-        if attack is None:
-            attack = random.choice(self.attacks.values())
-        # If we're called with the name of an attack (instead of an
-        # Attack-inheriting object), find that attack in our list.
-        elif type(attack) == str:
-            attack = self.attacks[attack]
-        # Let the attack handle doing whatever it wants to do.
-        attack.perform(self, target)
+        if ability is None:
+            ability = random.choice(self.abilities.values())
+        # If we're called with the name of an ability (instead of an
+        # Ability-inheriting object), find that ability in our list.
+        elif type(ability) == str:
+            ability = self.abilities[ability]
+        # Let the ability handle doing whatever it wants to do.
+        ability.perform(self, target)
 
 
 #==================================================================
-# Just an easy way to make basic slimes that all have the Acid attack.
+# 
 class CharSlime(Character):
+    """Just an easy way to make basic slimes that all have the Acid attack.
+    Not necessarily a good design in terms of which classes you should have."""
     def __init__(self, name, hp, can_disintegrate):
-        attacks = [AttackStrongerEveryUse('Acid', 1)]
+        abilities = [AbilityStrongerEveryUse('Acid', 1)]
         # Optionally, allow extra dangerous slimes to disintigrate.
         if can_disintegrate:
-            attacks.append(AttackDisintegrate())
+            abilities.append(AbilityDisintegrate())
         # Call the Character class' initialization function on ourselves, so we
         # get all the base Character goodness handled, passing it the temporary
-        # list "attacks" we prepared within this function.
-        Character.__init__(self, name, hp, attacks)
+        # list "abilities" we prepared within this function.
+        Character.__init__(self, name, hp, abilities)
 
 
 #==================================================================
-# Attack classes
+# Ability classes
 #==================================================================
 
 #==================================================================
-class Attack:
+class Ability:
     """An ability to use in combat.  Each character gets their own list of
-    instances of abilities (no sharing), so attacks can change themselves over
-    time per-character."""
+    instances of abilities (no sharing), so abilities can change themselves
+    over time per-character."""
 
     def __init__(self, name, damage):
         self.name = name
@@ -76,35 +79,35 @@ class Attack:
 
 
 #==================================================================
-class AttackStrongerEveryUse(Attack):
+class AbilityStrongerEveryUse(Ability):
     """Special variety of an attack that gets stronger every use."""
 
     def __init__(self, name, growth):
-        Attack.__init__(self, name, 2)
+        Ability.__init__(self, name, 2)
         self.growth = growth
 
     def perform(self, source, target):
-        Attack.perform(self, source, target)
+        Ability.perform(self, source, target)
         self.damage += self.growth
 
 
 #==================================================================
-class AttackHeal(Attack):
+class AbilityHeal(Ability):
     def __init__(self, name, heal_amount):
-        Attack.__init__(self, name, -heal_amount)
+        Ability.__init__(self, name, -heal_amount)
 
     def __str__(self):
         return '{} ({} healing)'.format(self.name, -self.damage)
 
 
 #==================================================================
-class AttackDisintegrate(Attack):
+class AbilityDisintegrate(Ability):
     def __init__(self):
-        Attack.__init__(self, 'Disintegrate', 9)
+        Ability.__init__(self, 'Disintegrate', 9)
 
     def perform(self, source, target):
-        Attack.perform(self, source, target)
-        Attack.perform(self, source, source)
+        Ability.perform(self, source, target)
+        Ability.perform(self, source, source)
 
 
 #==================================================================
@@ -116,7 +119,7 @@ player_key = player_name.lower()
 combatants = {}
 # Add a player to the encounter.
 combatants[player_key] = Character(player_name, 20, [
-    Attack('Slash', 4), AttackHeal('Heal', 8)
+    Ability('Slash', 4), AbilityHeal('Heal', 8)
 ])
 # Add two slimes.
 combatants['slimea'] = CharSlime('Slime A', 5, False)
@@ -125,30 +128,30 @@ combatants['slimeb'] = CharSlime('Slime B', 5, True)
 # Keep doing combat while player is alive, and they're not alone.
 while player_key in combatants.keys() and len(combatants) > 1:
     # Write status of combat.
-    print 'Your attacks:'
-    for atk in sorted(combatants[player_key].attacks.values()):
+    print 'Your abilities:'
+    for atk in sorted(combatants[player_key].abilities.values()):
             print '  {}'.format(atk)
     print 'Remaining combatants:'
     for char in sorted(combatants.values()):
         print '  ' + str(char)
 
-    # Get player's choice of target and attack (ability) to use.
+    # Get player's choice of target and ability to use.
     atk_name = ''
     monster_name = ''
     # Keep trying until they give us something valid.
-    while atk_name not in combatants[player_key].attacks.keys() or monster_name not in combatants.keys():
+    while atk_name not in combatants[player_key].abilities.keys() or monster_name not in combatants.keys():
         # str.split(' ') is splitting the user's input on spaces.  We expect
         # the player to give us "some_word<space>another_word".
-        user_input = raw_input('<attack> <combatant>: ').split(' ')
+        user_input = raw_input('<ability> <combatant>: ').split(' ')
         if len(user_input) != 2:
             continue
         atk_name = user_input[0]
         monster_name = user_input[1]
 
-    # Player finally performs their attack.
+    # Player finally performs their ability.
     combatants[player_key].attack_something(combatants[monster_name], atk_name)
 
-    # Make each monster use some random attack against the player.
+    # Make each monster use some random ability against the player.
     for key, char in combatants.iteritems():
         if key == player_key:
             continue

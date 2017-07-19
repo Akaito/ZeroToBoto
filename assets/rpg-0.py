@@ -22,9 +22,7 @@ class Character:
 #==================================================================
 player = Character('Hiro', 20)
 slimea = Character('Slime A', 5)
-slimeb = Character('Slime B', 5)
 
 print str(player)
 print str(slimea)
-print str(slimeb)
 
