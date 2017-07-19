@@ -1,4 +1,4 @@
-# rpg-1.py
+# rpg-2.py
 
 
 #==================================================================
@@ -19,6 +19,10 @@ class Character:
     def __str__(self):
         return '{} ({}/{} hp)'.format(self.name, self.hp, self.hp_max)
 
+    def attack_something(self, target):
+        # Let the ability handle doing whatever it wants to do.
+        self.ability.perform(self, target)
+
 
 #==================================================================
 # Ability classes
@@ -37,11 +41,18 @@ class Ability:
     def __str__(self):
         return '{} ({} damage)'.format(self.name, self.damage)
 
+    def perform(self, source, target):
+        target.hp = min(max(0, target.hp - self.damage), target.hp_max)
+        print '{} used {} on {}'.format(source.name, self, target)
+
 
 #==================================================================
 player = Character('Hiro', 20, Ability('Slash', 5))
 slimea = Character('Slime A', 5, Ability('Acid', 2))
 
-print '{} has {}'.format(player, player.ability)
-print str(slimea) + ' has ' + str(slimea.ability)
+print player
+print slimea
+print ''
+player.attack_something(slimea)
+slimea.attack_something(player)
 

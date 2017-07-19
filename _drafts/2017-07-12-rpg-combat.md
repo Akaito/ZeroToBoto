@@ -217,6 +217,39 @@ Add an ability to the <tt>Character</tt> class, so each Character object knows w
 Print out something like "&lt;character&gt; has &lt;ability&gt;" for each character, getting its ability from some variable stored on the individual Character object.
 The printing can be done either in a class function or just out in the main script area.
 
+[The completed example.]({{ site.baseurl }}{% link /assets/rpg-1.py %})
+
+---
+
+## Exercise: Performing abilities
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/rpg-2.py 
+Hiro (20/20 hp)
+Slime A (5/5 hp)
+ 
+Hiro used Slash (5 damage) on Slime A (0/5 hp)
+Slime A used Acid (2 damage) on Hiro (18/20 hp)
+```
+
+From the main script area, make two different characters attack each other.
+Try to let the furthest-"down" (in terms of ownership) thing control the behavior.
+The main script shouldn't poke at the characters' internal data (abilities or hp).
+The characters shouldn't care about the details of what their abilities do.
+
+### Hints
+
+<ol>
+<li>Add an <tt>attack(self, target)</tt> function to the Character class.</li>
+<li>Add a <tt>perform(self, source, target)</tt> function to the Ability class.</li>
+{% include spoiler-hint.html major=2 minor=1
+    summary="My<tt>self</tt> is not your<tt>self</tt>"
+    details="Note how <tt>self</tt> really isn't <em>that</em> special.  It's a function parameter like any other.  If you pass <tt>self</tt> along to another function, the object being sent along can be called by another name in that next function.
+" %}
+</ol>
+
+[The completed example.]({{ site.baseurl }}{% link /assets/rpg-2.py %})
+
 ---
 
 [The complete RPG combat.]({{ site.baseurl }}{% link /assets/rpg-complete.py %})
