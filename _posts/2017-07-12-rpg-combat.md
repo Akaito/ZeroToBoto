@@ -64,6 +64,10 @@ This first parameter is traditionally named "self", and you should absolutely fo
 > So long as a type quacks like a duck and walks like a duck, to Python, it may as well be.
 > ... Unless you specifically ask something like `isinstance(fido, Duck())`.
 
+<!--
+[New-style class documentation.](https://www.python.org/download/releases/2.2.3/descrintro/)
+-->
+
 ---
 
 ## Inheritance
@@ -143,7 +147,7 @@ The type of a class/type you've defined is, sensibly enough, `type`.
 We didn't use `self` in these Dog/Cat examples; the function "speak" just prints a message no matter which instance it's called on.
 
 ```python
-class RemoteMachine:
+class RemoteMachine(object):
     def __init__(self, ip):
         self.ip = ip
 
@@ -377,6 +381,8 @@ Dictionaries use curly braces `{}`, as opposed to lists' square brackets `[]`.
 You can create them empty (like "stats" above), or with some items already in them (like "turtles" above).
 If defining key-value pairs when you declare the dictionary, the format is `key: value,key2: value2`, and so on.
 To add key-value pairs into a dictionary (officially the `dict` type) later on, index the dictionary with the desired key, and assign to it the desired value.
+
+[<tt>dict</tt> documentation.](https://docs.python.org/2.7/library/stdtypes.html?highlight=dict#dict)
 
 ---
 
