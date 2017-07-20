@@ -22,11 +22,27 @@ Slime B has died!
 ```
 <!-- more -->
 
-Classes are very useful for having a collection of stuff that agrees to some kind of way of interacting with it, and writing very simple code that uses that means of interacting, without necessarily knowing what it's using.
-Sounds weird, but it will make sense over time.
+## Classes
+
+Classes are very useful for having a collection of stuff that agrees to some way of interacting with it, and writing very simple code that uses that means of interacting, without necessarily knowing what it's using.
+You describe the behavior of something in a class, then re-use that behavior throughout your code by creating "instances of" that class.
+Instances of a class are also called "objects" of a class; you'll see both terms used interchangeably.
+
+For example, let's say Clothing is a class.
+If I tell you I have an object of clothing, you already know some basic things about how it's used and what it does, without me saying anything more.
+Further, you may have an object of Clothing that's red, and I have an object of Clothing that's blue.
+Nothing about their use or behavior changes (they're both objects of Clothing), but data associated with each individual *instance* of Clothing changes.
+
 Some basic code can operate on a list of *things*, and let them drive what that actually means.
 This lets you easily extend some functionality you have later on by just creating one new class.
 *Without* needing to touch the code you've already debugged and figured out is just right for the basic intent of the program.
+
+Back at the Clothing example, you may have some objects of Clothing and some of Cookware.
+These are different types, but you can load some number of objects of either type into a box and donate it all to a charity.
+Your generic "get box of stuff to charity" procedure doesn't change due to the objects' types changing, so it can operate the same way no matter what you add to the box.
+While the charity on the receiving end will invoke different behavior depending on what types it receives.
+Generally, this is how you want to structure your code involving classes and objects.
+Try to keep as much of your program's overall behavior as indifferent as possible to the inner-workings of objects as you can.
 
 ```python
 class Dog(object):  # defining a new class/type
@@ -67,6 +83,53 @@ This first parameter is traditionally named "self", and you should absolutely fo
 <!--
 [New-style class documentation.](https://www.python.org/download/releases/2.2.3/descrintro/)
 -->
+
+---
+
+## <tt>self</tt>
+
+`self` is always the object you're calling the class' function with.
+We didn't use `self` in these Dog/Cat examples; the function "speak" just prints a message no matter which instance it's called on.
+
+```python
+class RemoteMachine(object):
+    def __init__(self, ip):
+        self.ip = ip
+
+    def ping(self):
+        response_ms = some_imaginary_module.send_ping(self.ip)
+        print response_ms
+```
+
+```bash
+>>> machines = [
+...     RemoteMachine('127.0.0.1'),
+...     RemoteMachine('10.0.0.1')
+... ]
+>>> for machine in machines:
+...        machine.ping()
+...
+0.09
+2.2
+```
+
+`__init__` is a special function.
+Whenever an object is being instantiated, its type's `__init__` function is called; again passing the object as the first parameter, "self".
+This lets you setup objects of your type with some default values and variables assigned.
+It's very often a good idea to give your types an `__init__` function.
+
+You can also give `__init__` more parameters than just <tt>self</tt>, and then you can take in more parameters during object creation.
+Note `RemoteMachine('10.0.0.1')` *looks* like you're just giving it one parameter, while the function expects two ("self" and "ip").
+But, because of that special "self" behavior on class functions, you're actually giving it the object, *then* whatever extra arguments you filled in.
+
+In Python, assigning to a variable makes it exist.
+So assigning to `self.ip` in the RemoteMachine `__init__` function makes whatever object "self" happens to be have a variable named "ip", and gives it some value.
+Don't forget to prefix your object variable access with `self.`!
+
+All this special <tt>self</tt> behavior really boils down to syntactic sugar.
+`fido.speak()` is exactly the same as `Dog.speak(fido)`.
+It's just a function that exists within some scope (the Dog class; as opposed to a module or other), and it takes one parameter.
+Its one parameter is *expected* to be an object of the Dog class.
 
 ---
 
@@ -138,53 +201,6 @@ So in the above where you see `__main__.Dog`, that's of the format "&lt;module_n
 You can see that the `type()` of an object is exactly the class it was instantiated from.
 The type of a class/type you've defined is, sensibly enough, `type`.
 `type` is just a type of variable; much like `str` and `int`.
-
----
-
-## <tt>self</tt>
-
-`self` is always the object you're calling the class' function with.
-We didn't use `self` in these Dog/Cat examples; the function "speak" just prints a message no matter which instance it's called on.
-
-```python
-class RemoteMachine(object):
-    def __init__(self, ip):
-        self.ip = ip
-
-    def ping(self):
-        response_ms = some_imaginary_module.send_ping(self.ip)
-        print response_ms
-```
-
-```bash
->>> machines = [
-...     RemoteMachine('127.0.0.1'),
-...     RemoteMachine('10.0.0.1')
-... ]
->>> for machine in machines:
-...        machine.ping()
-...
-0.09
-2.2
-```
-
-`__init__` is a special function.
-Whenever an object is being instantiated, its type's `__init__` function is called; again passing the object as the first parameter, "self".
-This lets you setup objects of your type with some default values and variables assigned.
-It's very often a good idea to give your types an `__init__` function.
-
-You can also give `__init__` more parameters than just <tt>self</tt>, and then you can take in more parameters during object creation.
-Note `RemoteMachine('10.0.0.1')` *looks* like you're just giving it one parameter, while the function expects two ("self" and "ip").
-But, because of that special "self" behavior on class functions, you're actually giving it the object, *then* whatever extra arguments you filled in.
-
-In Python, assigning to a variable makes it exist.
-So assigning to `self.ip` in the RemoteMachine `__init__` function makes whatever object "self" happens to be have a variable named "ip", and gives it some value.
-Don't forget to prefix your object variable access with `self.`!
-
-All this special <tt>self</tt> behavior really boils down to syntactic sugar.
-`fido.speak()` is exactly the same as `Dog.speak(fido)`.
-It's just a function that exists within some scope (the Dog class; as opposed to a module or other), and it takes one parameter.
-Its one parameter is *expected* to be an object of the Dog class.
 
 ---
 
