@@ -133,7 +133,41 @@ Its one parameter is *expected* to be an object of the Dog class.
 
 ---
 
+## Exercise: Create a class
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/rpg-0.py 
+Hiro (20/20 hp)
+Slime A (5/5 hp)
+```
+
+Example of using your new class in the interpreter:
+
+```python
+>>> player = Character('Hiro', 20)
+>>> print str(player)
+Hiro (20/20 hp)
+```
+
+Create a <tt>Character</tt> class that has a name, current HP, and max HP, all tracked per instance of that class.
+Give that class the special function `__str__(self)`.
+`__str__` is what Python calls on an object when you ask to convert it to a string, such as for printing.
+This is a very useful method to add to your classes.
+
+Create a couple of character objects, and print each of them out in a human-friendly way (like above).
+
+[The completed example.]({{ site.baseurl }}{% link /assets/rpg-0.py %})
+
+---
+
 ## Inheritance
+
+> It's good to have some familiarity with inheritance.
+> Knowing it may sometimes make some of your scripts much easier to write.
+> However, knowing how to use it isn't required to use AWS/boto.
+> Normally more time is spent on introducing these topics.
+> So don't become distraught if you don't get it all right away.
+> This is a quick introduction to it to help you know how things work underneath.
 
 `class Dog:` vs. `class Dog(object):`.
 Classes can be defined in Python in either of these two ways.
@@ -201,25 +235,6 @@ So in the above where you see `__main__.Dog`, that's of the format "&lt;module_n
 You can see that the `type()` of an object is exactly the class it was instantiated from.
 The type of a class/type you've defined is, sensibly enough, `type`.
 `type` is just a type of variable; much like `str` and `int`.
-
----
-
-## Exercise: Create a class
-
-```bash
-chris@CSU:~/work/ZeroToBoto$ python assets/rpg-0.py 
-Hiro (20/20 hp)
-Slime A (5/5 hp)
-```
-
-Create a <tt>Character</tt> class that has a name, current HP, and max HP, all tracked per instance of that class.
-Give that class the special function `__str__(self)`.
-`__str__` is what Python calls on an object when you ask to convert it to a string, such as for printing.
-This is a very useful method to add to your classes.
-
-Create a couple of character objects, and print each of them out in a human-friendly way (like above).
-
-[The completed example.]({{ site.baseurl }}{% link /assets/rpg-0.py %})
 
 ---
 
