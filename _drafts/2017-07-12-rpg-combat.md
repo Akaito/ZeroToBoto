@@ -28,6 +28,12 @@ Classes are very useful for having a collection of stuff that agrees to some way
 You describe the behavior of something in a class, then re-use that behavior throughout your code by creating "instances of" that class.
 Instances of a class are also called "objects" of a class; you'll see both terms used interchangeably.
 
+A good analogy for classes versus objects is that a class is a blueprint for how to build a house.
+An object is a house made from that blueprint.
+The blueprint defines how things work and fit together, but you can't live in a blueprint or fill it with actual things.
+You can have many houses made from the same blueprint.
+They'll all work the same way, but painting one house red doesn't suddenly paint every house made from that blueprint red as well.
+
 For example, let's say Clothing is a class.
 If I tell you I have an object of clothing, you already know some basic things about how it's used and what it does, without me saying anything more.
 Further, you may have an object of Clothing that's red, and I have an object of Clothing that's blue.
@@ -72,13 +78,13 @@ It's like there's a function that is the class' name, which gives you back a new
 
 To call a class' function, it's `object_name.function_name()`.
 Similar to using a function defined within a module (`random.randint()`).
-Only here, the object you're calling any of its functions on actually gets passed as the first parameter to that function.
+Only here, the object you're calling any functions with actually gets passed as the first parameter to that function.
 This first parameter is traditionally named "self", and you should absolutely follow that practice.
 
 > If you're coming from other languages where this example requires a common base class <tt>Animal</tt> between these two types, this is a bit different in Python.
 > Python is strongly typed (Dog is not Cat), but you can also mix and match types about as much as you want.
-> So long as a type quacks like a duck and walks like a duck, to Python, it may as well be.
-> ... Unless you specifically ask something like `isinstance(fido, Duck())`.
+> So long as a type walks like a duck and sounds like a duck, to Python, it may as well be.
+> ... Unless you specifically ask something like `isinstance(fido, Duck)`.
 
 <!--
 [New-style class documentation.](https://www.python.org/download/releases/2.2.3/descrintro/)
@@ -88,48 +94,70 @@ This first parameter is traditionally named "self", and you should absolutely fo
 
 ## <tt>self</tt>
 
+The above are classic examples in programming of how to use classes, but not very good ones.
+Classes should exist only to reduce duplicating *functionality*.
+Since the functionality is the same between Dog and Cat (call "speak" and have something get printed), there should be only one class here.
+The message that's "spoken" is just data that should be on an object.
+To do which, you need to use <tt>self</tt>.
+
 `self` is always the object you're calling the class' function with.
-We didn't use `self` in these Dog/Cat examples; the function "speak" just prints a message no matter which instance it's called on.
+We didn't use `self` in the above Dog/Cat examples; the function "speak" just printed out a message no matter which instance it was called on.
 
 ```python
-class RemoteMachine(object):
-    def __init__(self, ip):
-        self.ip = ip
+class Animal(object):
+    def __init__(self, sound):
+        # copy the passed-in value to this object's data
+        # (the names don't have to match)
+        self.sound = sound
 
-    def ping(self):
-        response_ms = some_imaginary_module.send_ping(self.ip)
-        print response_ms
+    def speak(self):
+        print self.sound
 ```
 
-```bash
->>> machines = [
-...     RemoteMachine('127.0.0.1'),
-...     RemoteMachine('10.0.0.1')
-... ]
->>> for machine in machines:
-...        machine.ping()
+```python
+>>> fido = Animal()
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: __init__() takes exactly 2 arguments (1 given)
+>>> fido = Animal('woof')
+>>> fido.speak()
+woof
+>>> animals = [fido, Animal('woof'), Animal('meow')]
+>>> for animal in animals:
+...        animal.speak()
 ...
-0.09
-2.2
+woof
+woof
+meow
 ```
 
 `__init__` is a special function.
-Whenever an object is being instantiated, its type's `__init__` function is called; again passing the object as the first parameter, "self".
+Whenever an object is being instantiated (first created and initialized), its type's `__init__` function is called; again passing the object as the first parameter, "self".
 This lets you setup objects of your type with some default values and variables assigned.
 It's very often a good idea to give your types an `__init__` function.
 
-You can also give `__init__` more parameters than just <tt>self</tt>, and then you can take in more parameters during object creation.
-Note `RemoteMachine('10.0.0.1')` *looks* like you're just giving it one parameter, while the function expects two ("self" and "ip").
-But, because of that special "self" behavior on class functions, you're actually giving it the object, *then* whatever extra arguments you filled in.
+You can also define your `__init__` with more parameters than just <tt>self</tt>, and then you can take in more parameters during object creation.
+Note `Animal('woof')` *looks* like you're just giving it one parameter, while the function expects two (<tt>self</tt> and <tt>sound</tt>).
+But, because of that special <tt>self</tt> behavior on functions defined in a class, it's actually getting the object being instantiated/initialized, *then* whatever arguments you called the function with.
 
 In Python, assigning to a variable makes it exist.
-So assigning to `self.ip` in the RemoteMachine `__init__` function makes whatever object "self" happens to be have a variable named "ip", and gives it some value.
-Don't forget to prefix your object variable access with `self.`!
+So assigning to `self.sound` in the Animal `__init__` function makes whatever object "self" happens to be gain a variable named "sound", and gives it some value.
+Don't forget to use `self.` in your <tt>\_\_init\_\_</tt> functions!
+If you just write `sound = sound` instead, your object won't store anything.
+That's just a function-local `sound` that'll get thrown away when we leave the function.
 
-All this special <tt>self</tt> behavior really boils down to syntactic sugar.
-`fido.speak()` is exactly the same as `Dog.speak(fido)`.
+All this special <tt>self</tt> behavior really boils down to is "syntactic sugar".
+A language feature that saves you some typing.
+Writing `fido.speak()` is "exactly" the same as `Dog.speak(fido)`.
 It's just a function that exists within some scope (the Dog class; as opposed to a module or other), and it takes one parameter.
 Its one parameter is *expected* to be an object of the Dog class.
+
+```python
+>>> fido.speak()
+woof
+>>> Animal.speak(fido)
+woof
+```
 
 ---
 
@@ -168,23 +196,24 @@ Create a couple of character objects, and print each of them out in a human-frie
 > Normally more time is spent on introducing these topics.
 > So don't become distraught if you don't get it all right away.
 > This is a quick introduction to it to help you know how things work underneath.
+> Though, do at least cover the section below on Dictionaries.
 
-`class Dog:` vs. `class Dog(object):`.
+`class Animal:` vs. `class Animal(object):`.
 Classes can be defined in Python in either of these two ways.
 The first is an old-style class; the second a new-style class.
 Other than for specific compatibility issues with older code, you should make [new-style classes](https://docs.python.org/2.7/glossary.html#term-new-style-class) that inherit from <tt>object</tt>.
-In the second way, you're saying that Dog "inherits from" or "is a subclass of" the <tt>object</tt> type.
+In the second way, you're saying that Animal "inherits from" or "is a subclass of" the <tt>object</tt> type.
 `object` is the base-most type that most everything else inherits from.
 If a type inherits from another type, the subclass also has all of the parent class' stuff.
 
 ```python
-class GermanShepherd(Dog):
+class Subwoofer(Animal):
     pass  # nothing to do here; just let us complete the class definition
 ```
 
 ```python
->>> GermanShepherd().speak()
-woof
+>>> Subwoofer('LOUD_BASS_NOISE').speak()
+LOUD_BASS_NOISE
 ```
 
 The `pass` keyword is very useful for stubbing code in when you know something will eventually be there in the future.
@@ -197,21 +226,22 @@ It's not specifically related to inheritance in any kind of special way.
 ## Overriding behavior
 
 ```python
-class Chihuahua(Dog):
+class WalkieTalkie(Animal):
     def speak(self):
-        print 'yap'
+        print '<ksh>{}<ksh>'.format(self.sound)
 ```
 
 ```python
->>> Chihuahua().speak()
-yap
->>> GermanShepherd().speak()
-woof
+>>> Animal('hello').speak()
+hello
+>>> WalkieTalkie('hello').speak()
+<ksh>hello<ksh>
 ```
 
-Even though Chihuahua inherits from Dog, it gives a new definition to <tt>speak</tt>.
-This new definition is only present in objects of type Chihuahua, and any other classes that inherit from Chihuahua.
-Instances of Dog and GermanShepherd will still say 'woof'.
+Even though WalkieTalkie inherits from Animal, it gives a new definition to <tt>speak</tt>.
+Since WalkieTalkie *doesn't* give a new definition for <tt>\_\_init\_\_</tt>, Animal's version is used.
+This new definition is only present in objects of type WalkieTalkie, and any other classes that inherit from WalkieTalkie.
+Instances of Animal will still just print their sound.
 
 ---
 
@@ -219,19 +249,19 @@ Instances of Dog and GermanShepherd will still say 'woof'.
 
 ```python
 >>> fido
-<__main__.Dog object at 0x7fca85abc310>
+<__main__.Animal object at 0x7fca85abc310>
 >>> type(fido)
-<class '__main__.Dog'>
->>> Dog
-<class '__main__.Dog'>
->>> type(fido) == Dog
+<class '__main__.Animal'>
+>>> Animal
+<class '__main__.Animal'>
+>>> type(fido) == Animal
 True
->>> type(Dog)
+>>> type(Animal)
 <type 'type'>
 ```
 
 "\_\_main\_\_" is the special "module" name given to our script when its file is executed directly from Python or we're using the Python interpretor directly.
-So in the above where you see `__main__.Dog`, that's of the format "&lt;module_name&gt;.&lt;type_name&gt;".
+So in the above where you see `__main__.Animal`, that's of the format "&lt;module_name&gt;.&lt;type_name&gt;".
 You can see that the `type()` of an object is exactly the class it was instantiated from.
 The type of a class/type you've defined is, sensibly enough, `type`.
 `type` is just a type of variable; much like `str` and `int`.
@@ -247,7 +277,7 @@ Slime A (5/5 hp) has Acid (2 damage)
 ```
 
 Create a new <tt>Ability</tt> class that has a name and an integer amount of damage it deals.
-Add an ability to the <tt>Character</tt> class, so each Character object knows what its Ability is.
+Add an ability object to the <tt>Character</tt> class, so each Character object knows what its Ability is.
 Print out something like "&lt;character&gt; has &lt;ability&gt;" for each character, getting its ability from some variable stored on the individual Character object.
 The printing can be done either in a class function or just out in the main script area.
 
@@ -289,22 +319,22 @@ The characters shouldn't care about the details of what their abilities do.
 ## Calling partent/superclass functions
 
 ```python
-class Dog(object):
-    def __init__(self, fur_color):
-        self.fur_color = fur_color
+class Animal(object):
+    def __init__(self, sound):
+        self.sound = sound
 
-class BigRedDog(Dog):
+class Mime(Animal):
     def __init__(self):
-        Dog.__init__(self, 'red')
+        Animal.__init__(self, '<silence>')
 ```
 
 Recall class functions are just like normal functions in a different scope, plus the <tt>self</tt> syntactic sugar.
-You can call functions from your parent class (or, really, any class) if you need to make use of them.
+You can call functions that belong to your parent class (or, really, any class) if you need to make use of them.
 
-> If you're coming from other languages, you may see the problem with directly saying `Dog.__init__()`.
-> What happens if BigRedDog is changed to inherit from Cat or <tt>object</tt> instead?
+> If you're coming from other languages, you may see the problem with directly saying `Animal.__init__()`.
+> What happens if Mime is changed to inherit from WalkieTalkie or <tt>object</tt> instead?
 > In other languages, this would be an issue.
-> In Python, it's still just a function, and data is still named (rather than addressed).
+> In Python, it's still just a function.
 
 There is a fancier way to call a superclass function to prevent the possible future headache if your superclass changes.
 It's recommended that you do this fancier thing, but don't fret too much if this looks weird.
@@ -312,27 +342,27 @@ It's using a somewhat advanced Python feature.
 This is one area where things are a little more awkward with Python than with some other languages.
 
 ```python
-class Dog(object):
-    def __init__(self, fur_color):
-        self.fur_color = fur_color
+class Animal(object):
+    def __init__(self, sound):
+        self.sound = sound
 
-class BigRedDog(Dog):
+class Mime(Animal):
     def __init__(self):
-        super(BigRedDog, self).__init__('red')
+        super(Mime, self).__init__('<silence>')
 ```
 
 You can read more about `super()` [here](https://docs.python.org/2.7/library/functions.html#super).
 Why don't you have to pass "self" to the `__init__` call?
 Because `super()` is a weird "proxy object"; read more in that link if desired.
 Just think of `super()` as returning <tt>self</tt>, but looking at <tt>self</tt> as if it were its superclass' type instead.
-Then that `__init__()` call you see is just using the previously mentioned syntactic sugar to not have to pass anything extra to it to make its <tt>self</tt> work.
+Then that `__init__()` call you see is just using the previously mentioned syntactic sugar to not have to pass anything extra to it to make the <tt>self</tt> parameter work.
 
 If you're using Python 3, `super()` is a bit easier to use:
 
 ```python
-class BigRedDog(Dog):
+class Mime(Animal):
     def __init__(self):
-        super().__init__('red')
+        super().__init__('<silence>')
 ```
 
 ---
@@ -476,7 +506,7 @@ For the enemies, just make them pick a random attack from the set they have avai
 1. The random module has a function called `choose()` you should look up.
 2. Watch out for keys that aren't actually in dictionaries.  Things are case-sensitive!
 3. This is a somewhat significant step up from the previous exercise, and from hangman.  Don't expect it to be immediately obvious.
-	Keep at it, and maybe try breaking out pieces you can test on their own before coming back to add them to your combat encounter program.
+    Keep at it, and maybe try breaking out pieces you can test on their own before coming back to add them to your combat encounter program.
 
 [The complete RPG combat.]({{ site.baseurl }}{% link /assets/rpg-complete.py %})
 
