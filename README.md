@@ -12,10 +12,12 @@ Learn programming with Python from no experience, up to using the AWS Boto modul
 - [x] Variables, user input, casting str/int, if / while, modules (barely).
 - [x] Lists.
 - [ ] Pass by "value"/"ref" (really mutable/immutable types).
-- [ ] Custom types.
+- [ ] Custom types.  Class vs. object.
 	Web scraper example?
-- [ ] Secret keys and S3 upload/download.
+- [ ] Boto.  Secret keys and S3 upload/download.
 	Also AWS account setup.
+- [ ] RPG combat (inheritance and overriding behaviors).
+- [ ] MUD?
 
 
 ### Advanced / second class materials
