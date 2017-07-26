@@ -7,13 +7,13 @@ title: Adventure game
 
 ```bash
 You enter the Cave Entrance.
-You've been here 1 time(s).
+You've been here 0 time(s) before.
 You see: Curved walls leading into darkness.
 Paths: ['forward', 'trapdoor']
 Choose your path: forward
  
 You enter the Hallway.
-You've been here 1 time(s).
+You've been here 0 time(s) before.
 You see: A long way forward with another path to the left.
 Paths: ['pressure-plate', 'back', 'left']
 Choose your path: _
@@ -268,19 +268,19 @@ In the final game, they'll then type in the name of a connection, and move into 
 ```bash
 chris@CSU:~/work/ZeroToBoto$ python assets/adventure-complete.py 
 You enter the Cave Entrance.
-You've been here 1 time(s).
+You've been here 0 time(s) before.
 You see: Curved walls leading into darkness.
 Paths: ['forward', 'trapdoor']
 Choose your path: forward
  
 You enter the Hallway.
-You've been here 1 time(s).
+You've been here 0 time(s) before.
 You see: A long way forward with another path to the left.
 Paths: ['pressure-plate', 'back', 'left']
 Choose your path: back
  
 You enter the Cave Entrance.
-You've been here 2 time(s).
+You've been here 1 time(s) before.
 You see: Curved walls leading into darkness.
 Paths: ['forward', 'trapdoor']
 Choose your path:

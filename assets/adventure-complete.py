@@ -16,8 +16,8 @@ class Room(object):
     def enter(self):
         """Called when the player enters the room."""
         print 'You enter the {}.'.format(self.name)
+        print "You've been here {} time(s) before.".format(self.visits)
         self.visits += 1
-        print "You've been here {} time(s).".format(self.visits)
         self.describe()
 
     def describe(self):
