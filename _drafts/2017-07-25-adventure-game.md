@@ -176,9 +176,23 @@ You see: Curved walls leading into darkness.
 
 Create a <tt>Room</tt> class that has a name and a description.
 You should be able to initialize Room objects with their name (as shown above), and set their description (also seen above).
-Add a `describe(self)` function that mimics what's been demonstrated above.
+Add a <tt>describe</tt> function that mimics what's been demonstrated above.
 
 Create a couple of room objects, and have them <tt>describe</tt> themselves.
+
+### Hints
+
+<ol>
+{% include spoiler-hint.html major=0 minor=1
+	summary="<tt>describe</tt> oneself"
+	details="
+		Remember the <tt>describe</tt> function will need to take one parameter: <code>self</code>
+" %}
+{% include spoiler-hint.html major=0 minor=2
+    summary="Object initialization"
+    details="It's almost always a good idea to have an <code>__init__(self)</code> function that assigns <em>something</em> to each variable name you want an object of a given class to hold.
+" %}
+</ol>
 
 [The completed example.]({{ site.baseurl }}{% link /assets/adventure-0.py %})
 
@@ -217,7 +231,7 @@ You can create them empty (like "stats" above), or with some items already in th
 If defining key-value pairs when you declare the dictionary, the format is `key: value,key2: value2`, and so on.
 To add key-value pairs into a dictionary (officially the `dict` type) later on, index the dictionary with the desired key, and assign to it the desired value.
 
-Check out the [<tt>dict</tt> documentation](https://docs.python.org/2.7/library/stdtypes.html?highlight=dict#dict) for information on helpful things like the `.keys()` function.
+Check out the [<tt>dict</tt> documentation](https://docs.python.org/2.7/library/stdtypes.html?highlight=dict#dict) for information on helpful things like the [<tt>.keys()</tt>](https://docs.python.org/2.7/library/stdtypes.html?highlight=dict#dict.keys) function.
 
 ---
 
@@ -232,6 +246,8 @@ Paths: []
 You see: A long way forward with another path to the left.
 Paths: ['right', 'back', 'left']
 ```
+
+Example of use in the interpreter:
 
 ```python
 >>> entry.describe()
@@ -291,7 +307,7 @@ Each room should have its own unique set of connections.
     These items can be taken by the player by typing their name in instead of a connection's name.
     Score the player's result at the end of the game based on the sum value of all items collected.
 - Instead of navigating rooms, make a conversation with an NPC.
-    The NPC should be able to "recall" past choices from the player and react differently to the same input based on that.
+    The NPC should be able to "recall" past selections from the player and react differently to the same input based on that.
 
 [The complete adventure game.]({{ site.baseurl }}{% link /assets/adventure-complete.py %})
 
