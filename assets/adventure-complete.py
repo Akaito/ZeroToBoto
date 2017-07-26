@@ -27,8 +27,11 @@ pit = Room('Pit of No Escape')
 bakery = Room('Bakery')
 bakery.description = 'A bright bakery full of delicious cupcakes.'
 
-hallway = Room('Hallway', connections={'left': pit, 'right': bakery})
-hallway.description = 'A long way forward with some branching paths.'
+hallway_plate = Room('Hallway (Pressure Plate)', connections={'left': pit, 'right': bakery})
+hallway_plate.description = 'A long way forward with another path to the left.  A new way has opened.'
+
+hallway = Room('Hallway', connections={'left': pit, 'forward': pit, 'pressure-plate': hallway_plate})
+hallway.description = 'A long way forward with another path to the left.'
 
 entry = Room('Cave Entrance', connections={'trapdoor': pit, 'forward': hallway})
 entry.description = 'Curved walls leading into darkness.'
@@ -38,6 +41,6 @@ while True:
     current_room.enter()
     path = ''
     while path not in current_room.connections.keys():
-        path = raw_input('Choose your path:')
+        path = raw_input('Choose your path: ')
     current_room = current_room.connections[path]
 
