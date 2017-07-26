@@ -11,10 +11,13 @@ class Room(object):
         self.name = name
         self.description = 'An indescribable room.'
         self.connections = connections
+        self.visits = 0
 
     def enter(self):
         """Called when the player enters the room."""
         print 'You enter the {}.'.format(self.name)
+        self.visits += 1
+        print "You've been here {} time(s).".format(self.visits)
         self.describe()
 
     def describe(self):
@@ -77,4 +80,5 @@ while True:  # loop until 'quit' or a dead-end room; logic below
         break
     # move to the chosen room, referred to by the connection in this one
     current_room = current_room.connections[path]
+    print ''  # just give a little breathing room for the text
 

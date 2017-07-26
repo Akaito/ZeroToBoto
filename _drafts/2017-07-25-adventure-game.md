@@ -7,13 +7,16 @@ title: Adventure game
 
 ```bash
 You enter the Cave Entrance.
+You've been here 1 time(s).
 You see: Curved walls leading into darkness.
 Paths: ['forward', 'trapdoor']
 Choose your path: forward
+ 
 You enter the Hallway.
+You've been here 1 time(s).
 You see: A long way forward with another path to the left.
 Paths: ['pressure-plate', 'back', 'left']
-Choose your path: 
+Choose your path: _
 ```
 
 <!-- more -->
@@ -157,25 +160,138 @@ woof
 ## Exercise: Create a class
 
 ```bash
-chris@CSU:~/work/ZeroToBoto$ python assets/rpg-0.py 
-Hiro (20/20 hp)
-Slime A (5/5 hp)
+chris@CSU:~/work/ZeroToBoto$ python assets/adventure-0.py 
+You see: An indescribable room.
+You see: Curved walls leading into darkness.
 ```
 
 Example of using your new class in the interpreter:
 
 ```python
->>> player = Character('Hiro', 20)
->>> print str(player)
-Hiro (20/20 hp)
+>>> entry = Room('Cave Entrance')
+>>> entry.description = 'Curved walls leading into darkness.'
+>>> entry.describe()
+You see: Curved walls leading into darkness.
 ```
 
-Create a <tt>Character</tt> class that has a name, current HP, and max HP, all tracked per instance of that class.
-Give that class the special function `__str__(self)`.
-`__str__` is what Python calls on an object when you ask to convert it to a string, such as for printing.
-This is a very useful method to add to your classes.
+Create a <tt>Room</tt> class that has a name and a description.
+You should be able to initialize Room objects with their name (as shown above), and set their description (also seen above).
+Add a `describe(self)` function that mimics what's been demonstrated above.
 
-Create a couple of character objects, and print each of them out in a human-friendly way (like above).
+Create a couple of room objects, and have them <tt>describe</tt> themselves.
 
-[The completed example.]({{ site.baseurl }}{% link /assets/rpg-0.py %})
+[The completed example.]({{ site.baseurl }}{% link /assets/adventure-0.py %})
+
+---
+
+## Dictionaries
+
+```python
+>>> stats = {}
+>>> stats['hp'] = 14
+>>> stats['dexterity'] = 7
+>>> print stats
+{'dexterity': 7, 'hp': 14}
+```
+
+```python
+>>> class Turtle(object):
+...     def __init__(self, color):
+...         self.color = color
+...
+>>> turtles = {'leonardo': Turtle('blue'), 'donatello': Turtle('purple')}
+>>> turtles['michaelangelo'] = Turtle('orange')
+>>> turtles['raphael'] = Turtle('red')
+>>> print turtles['donatello'].color
+purple
+```
+
+Dictionaries are collections of things, somewhat like lists, but you give each item in a dictionary a unique name.
+More generically, its name is its "key", which can be of nearly any type.
+Items (more generically, "values") are easy to access at random by *indexing* the dictionary with a value's key.
+However, dictionaries don't have a specific human-ey order to them like lists.
+So if you're enumerating items in a dictionary without using their keys, rely on not getting them in a predictable order.
+
+Dictionaries use curly braces `{}`, as opposed to lists' square brackets `[]`.
+You can create them empty (like "stats" above), or with some items already in them (like "turtles" above).
+If defining key-value pairs when you declare the dictionary, the format is `key: value,key2: value2`, and so on.
+To add key-value pairs into a dictionary (officially the `dict` type) later on, index the dictionary with the desired key, and assign to it the desired value.
+
+Check out the [<tt>dict</tt> documentation](https://docs.python.org/2.7/library/stdtypes.html?highlight=dict#dict) for information on helpful things like the `.keys()` function.
+
+---
+
+## Exercise: Making connections
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/adventure-1.py 
+You see: Curved walls leading into darkness.
+Paths: ['forward', 'trapdoor']
+You see: An indescribable room.
+Paths: []
+You see: A long way forward with another path to the left.
+Paths: ['right', 'back', 'left']
+```
+
+```python
+>>> entry.describe()
+>>> entry.connections['trapdoor'].describe()
+>>> entry.connections['forward'].describe()
+```
+
+Give each room a dictionary of connections to other rooms.
+The player will be presented with a list of connections available from the current room.
+In the final game, they'll then type in the name of a connection, and move into the room it refers to.
+
+[The completed example.]({{ site.baseurl }}{% link /assets/adventure-1.py %})
+
+---
+
+## Exercise: Make it interactive
+
+```bash
+chris@CSU:~/work/ZeroToBoto$ python assets/adventure-complete.py 
+You enter the Cave Entrance.
+You've been here 1 time(s).
+You see: Curved walls leading into darkness.
+Paths: ['forward', 'trapdoor']
+Choose your path: forward
+ 
+You enter the Hallway.
+You've been here 1 time(s).
+You see: A long way forward with another path to the left.
+Paths: ['pressure-plate', 'back', 'left']
+Choose your path: back
+ 
+You enter the Cave Entrance.
+You've been here 2 time(s).
+You see: Curved walls leading into darkness.
+Paths: ['forward', 'trapdoor']
+Choose your path:
+```
+
+Add a 'visit' counter to each room, adding to it each time the player enters a room.
+You'll need to have at least one way to get back to an earlier room to demonstrate that this works.
+This is mostly just to be sure you know how to refer to the object you mean to, without being able to cheat and hardcode the object's name in.
+
+Have the player pick from a set of available connections out of their current room into others.
+Do this again and again until the player types "quit" or enters a room with no connections leading out of it.
+
+Make at least four rooms.
+An entry, a 'good ending' room, a 'bad ending' room, and one other.
+You should have at least one room with no connections, at least one with one connection, and at least one with two or more connections.
+Each room should have its own unique set of connections.
+
+### Extra credit
+
+- Make a room that can be "modified".
+    Emphasis on the double-quotes there.
+    Play the completed game example to see what I mean.
+- Give rooms some set of items (make a new Item class).
+    These items can be taken by the player by typing their name in instead of a connection's name.
+    Score the player's result at the end of the game based on the sum value of all items collected.
+- Instead of navigating rooms, make a conversation with an NPC.
+    The NPC should be able to "recall" past choices from the player and react differently to the same input based on that.
+
+[The complete adventure game.]({{ site.baseurl }}{% link /assets/adventure-complete.py %})
 
