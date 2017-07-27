@@ -42,4 +42,5 @@ while not is_every_letter_guessed(target_word, guesses):
     print ''
 
 print 'Found!  The word was "{}"'.format(target_word)
+print '  Discovered in {} guesses.'.format(len(guesses))
 
