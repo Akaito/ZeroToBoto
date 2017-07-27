@@ -26,7 +26,7 @@ def get_letter_guess():
             return letter
 
 
-def is_word_revealed(word, guesses):
+def is_every_letter_guessed(word, guesses):
     """Returns if every letter in the target word is accounted for in
     the user's guesses.
     """
@@ -64,7 +64,7 @@ target_word = get_random_word('hangman-dictionary.txt')
 guesses = []
 
 # Keep playing until the user guesses every letter in the word
-while not is_word_revealed(target_word, guesses):
+while not is_every_letter_guessed(target_word, guesses):
     print 'Word so far: {}'.format(partial_word(target_word, guesses))
     print 'Guesses so far: {}'.format(guesses)
     guesses.append(get_letter_guess())

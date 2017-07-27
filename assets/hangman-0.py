@@ -1,26 +1,27 @@
 # hangman-0.py
 
-def partial_word(word, revealed):
-    """Returns the target word, each character separated by spaces, with
-    letters not yet guessed shown as underscores.
+def get_letter_guess():
+    """Prompts the user for input until they give us something valid.
+
+    Returns the user's valid letter guess.
     """
-    # gradually build the correctly-guessed/hidden parts of the word
-    word_so_far = ''
-    for letter in word:
-        # write either the current letter of the target word, or a
-        # period, depending on if the user has guessed the letter
-        # yet or not
-        if revealed:
-            word_so_far = word_so_far + letter
-        else:
-            word_so_far = word_so_far + '.'
-    return word_so_far
+    # just keep looping forever; only break or return will get us out
+    while True:
+        # even though the variable's called "letter", the user could
+        # still type anything at all
+        letter = raw_input('Guess a letter: ')
+        if len(letter) == 1:
+            return letter
 
 
 #=====================================================================
-# the word that must be guessed
+# the word that must be guessed (hard-coded for now)
 target_word = 'otter'
 
-print 'Word so far: ' + partial_word(target_word, True)
-print 'Word so far: ' + partial_word(target_word, False)
+letter = get_letter_guess()
+
+if letter in target_word:
+    print '{} is in the word!'.format(letter)
+else:
+    print '{} is NOT in the word.'.format(letter)
 
