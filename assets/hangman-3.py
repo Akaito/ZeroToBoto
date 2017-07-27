@@ -1,6 +1,7 @@
-# hangman-2.py
+# hangman-3.py
 
 import random
+
 
 def get_letter_guess():
     """Prompts the user for input until they give us something valid.
