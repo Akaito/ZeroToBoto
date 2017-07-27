@@ -1,7 +1,6 @@
-# hangman-3.py
+# hangman-2.py
 
 import random
-
 
 def get_letter_guess():
     """Prompts the user for input until they give us something valid.
@@ -17,17 +16,18 @@ def get_letter_guess():
             return letter
 
 
-def is_word_revealed(word, guesses):
+def is_every_letter_guessed(word, guesses):
     """Returns if every letter in the target word is accounted for in
     the user's guesses.
     """
-    # for ... in -style enumerate the characters in the word
+    # It's easier to check the converse; are we missing anything?  Check
+    # if any one of the letters in the target word *isn't* guessed.
     for letter in word:
-        # "in"-style check if a value is in a sequence (a list, in our
-        # case)
         if letter not in guesses:
-            # found a letter in the word that hasn't been guessed yet!
+            # Found a letter in the word that hasn't been guessed yet!
             return False
+    # If we've reached this point, the whole word has been gone over.
+    # Not one of its letters was missing from the list of guesses.
     return True
 
 
@@ -56,8 +56,8 @@ target_word = word_choices[random.randint(0, len(word_choices)-1)]
 # a list of the letter guesses made
 guesses = []
 
-# Keep playing until the user guesses every letter in the word
-while not is_word_revealed(target_word, guesses):
+# keep playing until the user guesses every letter in the word
+while not is_every_letter_guessed(target_word, guesses):
     print 'Word so far: {}'.format(partial_word(target_word, guesses))
     print 'Guesses so far: {}'.format(guesses)
     guesses.append(get_letter_guess())
