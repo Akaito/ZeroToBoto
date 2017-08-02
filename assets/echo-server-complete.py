@@ -2,6 +2,7 @@
 
 import socket
 
+# TODO : Hide all this try-except low-level socket business in a module.
 listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 listen_socket.setblocking(0)
 try:
