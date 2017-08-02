@@ -11,6 +11,7 @@ class S3Str(object):
 
     def read(self, size_bytes=0):
         # important!  read() may be called extra times; head size_bytes!
+        # TODO : Implement cursor
         return self.s[:size_bytes]
 
     def write(self, s):
