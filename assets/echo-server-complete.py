@@ -2,21 +2,25 @@
 
 import socket
 
+PORT = 4001
+
 # TODO : Hide all this try-except low-level socket business in a module.
 listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 listen_socket.setblocking(0)
 try:
-    listen_socket.bind(('0.0.0.0', 4001))
+    listen_socket.bind(('0.0.0.0', PORT))
 except socket.error as e:
     if e.errno == 98:
         print "Socket wasn't closed properly.  Wait a moment and try again."
         exit()
     raise
 listen_socket.listen(0)
+print 'Listening on port {}.'.format(PORT)
 
 conns = []
 quitting = False
 while not quitting:
+    # TODO : Have to check for connections closed by remote.
     try:
         # try to accept more connections
         try:
