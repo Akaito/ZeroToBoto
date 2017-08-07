@@ -119,9 +119,9 @@ This first parameter is traditionally named "self", and you should absolutely fo
 
 ## <tt>self</tt> and <tt>\_\_init\_\_()</tt>
 
-The above is a classic example in programming of how to use classes, but not a good one to follow design-wise.
+The above is close to a classic example in programming of how to use classes, but not a good one to follow design-wise.
 Classes should be created when it helps to reduce duplicating *functionality*.
-They're similar to functions in this way, but classes make it easier to bundle functionality together and can aid readability.
+They're similar to functions in this way, but classes make it easier to bundle functionality and data together and can aid readability.
 Since the functionality is the same between Dog and Cat (call "speak" and have something get printed out), there should be only one class here.
 The message that's "spoken" is just data that should be on an object.
 To do which, you need to use <tt>self</tt>.
@@ -167,7 +167,7 @@ It's typically a good idea to give your types an <tt>\_\_init\_\_</tt> function.
 Recall that in Python, assigning to some variable also makes that variable exist if it didn't already.
 In both <tt>\_\_init\_\_</tt> functions we're adding the attribute "sound" to every object of type Dog or Cat that gets initialized.
 
-What's the difference from the last example?
+What's the improvement from the last example?
 Well, we spent more code defining classes, and their usage is exactly the same.
 So, nothing really just yet.
 However!
