@@ -25,15 +25,16 @@ Choose your path: _
 
 A class is sort of a contract which an object promises to uphold, describing how one can use it.
 A power outlet in your wall is a little like this.
-It promises to provide voltage on one prong, and ground on the other two.
+It promises to provide voltage to one connected prong, and ground to the other two.
 Things you plug into the wall know that they have to put the right wires into the right holes of a power outlet, but they don't know or care anything about what happens on the other side of the wall.
 Similarly, the power outlet doesn't care what's plugged into it or how its power is used.
 Also, if you mis-use the interface, bad things may happen.
 
 In this analogy, the promise of one power and two ground holes would be the class; the interface.
-The power outlet in your living room is one *instance of* that class; that promise of how it's used.
+The power outlet in your living room is one *instance of* that class; an object that promises to uphold the interface/contract.
 A power outlet in the kitchen is another instance.
-They're individual things you can point at and modify, but they both promise to behave in exactly the same way.
+Instances/objects are things you can point at and modify independently, but they both promise to behave in exactly the same way.
+An outlet object you've painted blue upholds the same contract as one painted green.
 
 You describe the behavior of something in a class, then re-use that behavior throughout your code by creating "instances of" that class.
 Instances of a class are also called "objects" of a class; you'll see both terms used interchangeably.
@@ -87,17 +88,23 @@ meow
 
 > If you're coming from other languages where this example requires a common base class <tt>Animal</tt> between these two types, this is a bit different in Python.
 > Python is strongly typed (Dog is not Cat), but you can also mix and match types about as much as you want.
-> So long as a type walks like a duck and sounds like a duck, to Python, it may as well be.
+> So long as a type walks like a duck and quacks like a duck, to Python, it may as well be a duck.
 > ... Unless you specifically ask something like `isinstance(fido, Duck)`.
 
 When you want to use a class, you create a new a new *object* of that class' *type* by giving the class name followed by parentheses.
-It's like there's a function that is the class' name, which gives you back a new object its type.
+It's like there's a function that is the class' name, which gives you back a new object of its type.
+In other languages this is often called the class' "constructor".
+You're building a new object, akin to *constructing* a new house from a House blueprint (class).
 
-A good analogy for classes versus objects is that a class is a blueprint for how to build a house.
 An object is a house made from that blueprint.
-The blueprint defines how things work and fit together, but you can't live in a blueprint or fill it with actual things.
-You can have many houses made from the same blueprint.
-They'll all work the same way, but painting one house red doesn't suddenly paint every house made from that blueprint red as well.
+The blueprint defines how things work and fit together, but you can't live in a blueprint.
+Modifying the blueprint (a class) changes all future objects made from it.
+Modifying a house (an object) *made from* a blueprint only changes that one house.
+Painting a house red doesn't suddenly paint all similar houses red.
+
+One exception to the house/blueprint analogy.
+If you change a function on a class, calling that function on any objects (even if they already existed) will call the new version of the function.
+Python lets you change classes like this on the fly.
 
 To call a class' function, it's `object_name.function_name()`.
 Similar to using a function defined within a module (`random.randint()`).
