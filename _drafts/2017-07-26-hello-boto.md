@@ -26,6 +26,7 @@ Uploaded /home/chris/work/ZeroToBoto/assets/css/style.scss
 	On that "quickstart" page linked in this step, try just the first little bit up to listing buckets.
 1. Create an S3 bucket in AWS using the [Web GUI](https://s3.console.aws.amazon.com/s3/home).
 
+---
 
 ## Walking the local filesystem
 
@@ -68,6 +69,7 @@ Each iteration of a loop involving os.walk() will give filenames relative to the
 Not relative to where you started from, and not absolute.
 Only the tuple's first item (index 0) is an absolute path.
 
+---
 
 ## Exercise: Printing full paths to files, recursively
 
@@ -88,12 +90,16 @@ There's also a lot of output that I'm cutting from the examples to keep things c
 Part of the exercise is also to skip "dotfiles", a common type of hidden file in \*nix systems.
 That's just any file whose name begins with a period.
 
+
 ### Hints
 
 1. You'll need to add strings together.
 	Since Windows and \*nix OSes both understand the forward slash as a directory separator, feel free to just use that for formatting your paths.
 2. An earlier show of os.walk() in this page will get you halfway there.
 
+[A completed example.]({{ site.baseurl }}/assets/backup-0.py)
+
+---
 
 ## S3 structure
 
@@ -109,6 +115,7 @@ A prefix might be something like "music/\*" to refer to all objects whose keys b
 It *feels* like it's a directory that you're targeting, but it's slightly different.
 Thankfully, we can take advantage of that Web GUI feature to make the backup script's results a little easier to look at there.
 
+---
 
 ## Slicing
 
@@ -149,6 +156,7 @@ When a sequence index is negative, it begins from the end instead of the beginni
 So a sequence's end-minus-one is the last element.
 `'hello'[-1] == 'hello'[len('hello')-1]` (recall the "end exclusive" behavior described earlier).
 
+---
 
 ## Exercise: Preparing S3 object keys for local files
 
@@ -165,6 +173,7 @@ Instead of printing those absolute paths, print paths to all files recursively, 
 So in the example here, <tt>rpg-3.py</tt> is in the <tt>~/work/ZeroToBoto/assets</tt> directory.
 
 If Windows is giving you backslashes (<tt>'\\\\'</tt>), you can use `somestr = somestr.replace('\\', '/')` to make them more widely-accepted forward-slashes.
+
 
 ### Hints
 
@@ -187,6 +196,9 @@ If Windows is giving you backslashes (<tt>'\\\\'</tt>), you can use `somestr = s
 " %}
 </ol>
 
+[A completed example.]({{ site.baseurl }}/assets/backup-1.py)
+
+---
 
 ## String splitting
 
@@ -201,6 +213,7 @@ If Windows is giving you backslashes (<tt>'\\\\'</tt>), you can use `somestr = s
 Another handy feature of Python is its <tt>str</tt> class' <tt>[split()](https://docs.python.org/2/library/stdtypes.html?highlight=str%20split#str.split)</tt> method.
 This is especially useful for breaking up paths.
 
+---
 
 ## Exercise: Prefix improvement
 
@@ -215,16 +228,87 @@ To make it easier to re-use a bucket and not mix up files from multiple runs of 
 Add the name of the current working directory as that prefix.
 So, prepend "&lt;cwd&gt;/" to the start of each of the keys you printed above.
 
+
 ### Hints
 
 1. String splitting is useful here.
 2. As is a negative index into an array.  Or `len()-1`.
 
+[A completed example.]({{ site.baseurl }}/assets/backup-2.py)
 
-[Boto3 S3 docs](http://boto3.readthedocs.io/en/latest/reference/services/s3.html)
+---
 
-[Boto3 S3 examples](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#examples)
+## Boto3
+
+The boto module takes some getting used to, and its [documentation](http://boto3.readthedocs.io/en/latest/reference/services/s3.html) ranges from very thorough to fairly lazy.
+
+```python
+import boto3
+
+session = boto3.Session(profile_name='awsday-admin')
+s3 = session.client('s3')
+```
+
+You may not need to use a [boto3.Session](http://boto3.readthedocs.io/en/latest/guide/session.html?highlight=session) object.
+Sessions store credentials, region selection, etc.
+Without a Session, you'll automatically get the creds from your "default" profile.
+
+A `boto3.client('s3')` or `session.client('s3')` Client object is a low-level interface to the AWS service you specify.
+A Resource, acquired as `boto3.resource('s3')` or `session.resource('s3')` also contains a Client, but it's a higher-level interface that can sometimes make your code easier to write.
+
+The only [S3.Client](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#client) method you'll need here is [s3.upload_file()](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.upload_file).
+Take a look at its documentation (linked in the previous sentence).
+
+Example usage: `s3.upload_file('css/style.scss', 'zerotoboto', 'assets/css/style.scss')`.
+This differs from the official documentation by not needing the `s3.meta.client` portion because our "s3" object above *is* a client, not a resource.
+
+Over time you'll learn more of the style and particular methods and objects involved with using boto.
+Later, you'll also want to `import botocore` so you can catch exceptions thrown by the boto3 module.
+But don't worry about that for this script.
+
+See also:
+- [Boto3 S3 examples](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#examples)
+- [SQS tutorial](http://boto3.readthedocs.io/en/latest/guide/sqs.html)
 
 
-[SQS tutorial](http://boto3.readthedocs.io/en/latest/guide/sqs.html)
+---
+
+## Exercise: Uploading files to S3
+
+```
+chris@CSU:~/work/ZeroToBoto/assets$ python backup-complete.py 
+Uploaded /home/chris/work/ZeroToBoto/assets/rpg-3.py
+      to zerotoboto:assets/rpg-3.py
+Uploaded /home/chris/work/ZeroToBoto/assets/hangman-0.py
+      to zerotoboto:assets/hangman-0.py
+Uploaded /home/chris/work/ZeroToBoto/assets/css/style.scss
+      to zerotoboto:assets/css/style.scss
+```
+
+
+## Hints
+
+1. The boto3 docs give a handful of examples of the parts that you'll need for this.
+2. Feel free to refer to the completed example for boto3 usage if you want to.
+	Especially when learning a module that isn't part of a long-standing standard, the more working example code you can look at, the better.
+
+[The completed backup script.]({{ site.baseurl }}/assets/backup-complete.py)
+
+---
+
+## Extra credit
+
+1. Don't upload anything in hidden directories.
+	That includes things in non-hidden directories in hidden directories.
+	`assets/.hidden-stuff/foo/bar.txt` shouldn't get uploaded.
+2. Check the modified time of the object in S3, and don't upload if the local file isn't newer.
+	This makes it faster to use the script again and again in one directory.
+	See the [S3.ObjectSummary](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#objectsummary) class' documentation.
+3. Add another script that is a "download" or "recover" version.
+	List all objects in the bucket in a prefix that matches the current working directory's name (not the full path; just the lowest folder name).
+	[<tt>s3.list_objects_v2()</tt>](http://boto3.readthedocs.io/en/latest/reference/services/s3.html#S3.Client.list_objects_v2) will be needed.
+	Download every object found in S3, also creating directories on the local disk as needed (if S3 doesn't do it for you, use [<tt>os.mkdir()</tt>](https://docs.python.org/2/library/os.html?highlight=os%20mkdir#os.mkdir)).
+4. Make a modified version of the script that doesn't just upload, but "synchronizes" the files it finds.
+	If the modified time of the file is newer in S3 than it is locally, downlad the file instead of uploading it.
+	Checking the hash to avoid unnecessary downloads (bandwidth out of AWS is billed) would be good, but isn't as straight-forward as you'd expect.
 
