@@ -35,7 +35,7 @@ for dir_listing in os.walk(cwd):
         # absolute, full path to the file on disk
         file_abspath = here + '/' + filename
         # S3 object key
-        key = file_abspath[len(os.getcwd()):]
+        key = file_abspath[len(cwd):]
         if key[0] == '/':  # cleaner S3 keys on Linux
             key = key[1:]  # remove leading slash
         # prepend the prefix so files aren't all dumped straight into bucket root
