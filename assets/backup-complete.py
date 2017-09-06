@@ -11,11 +11,12 @@ BUCKET_NAME = 'zerotoboto' # (create the bucket first in the AWS GUI)
 
 session = boto3.Session(profile_name='default')
 s3 = session.client('s3')
-prefix = os.getcwd().split('/')[-1]  # get current folder's name; not all stuff leading to it
+cwd = os.getcwd()
+prefix = cwd.split('/')[-1]  # get current folder's name; not all stuff leading to it
 
 
 # visit the current directory and every one within it, recursively
-for dir_listing in os.walk(os.getcwd()):
+for dir_listing in os.walk(cwd):
     here = dir_listing[0]  # full path 'here' for this iteration of the loop
     dirnames = dir_listing[1]  # list of directories here
     filenames = dir_listing[2]  # list of files here

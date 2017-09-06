@@ -60,17 +60,18 @@ style.scss
 
 Each time `os.walk(<dir>)` is called in a loop, it returns a tuple of lists.
 (A tuple is basically a fixed-size list.)
-The tuple's first item (at index 0) is the location you're currently looking at.
-The second item (index 1) is a list of folders in your current location.
-The third and final is a list of files in your current location.
+The tuple's first item (at index 0) is the absolute path of where you're currently looking.
+The second item (index 1) is a list of folder names in your current location.
+The third and final is a list of file names in your current location.
 Be mindful of relative vs. absolute paths.
 Each iteration of a loop involving os.walk() will give filenames relative to the directory it's currently looking at.
 Not relative to where you started from, and not absolute.
+Only the tuple's first item (index 0) is an absolute path.
 
 
 ## Exercise: Printing full paths to files, recursively
 
-```python
+```
 chris@CSU:~/work/ZeroToBoto/assets$ python backup-0.py 
 /home/chris/work/ZeroToBoto/assets/rpg-3.py
 /home/chris/work/ZeroToBoto/assets/hangman-0.py
@@ -94,7 +95,99 @@ That's just any file whose name begins with a period.
 2. An earlier show of os.walk() in this page will get you halfway there.
 
 
-## Preparing to upload
+## S3 structure
+
+S3 is made up of buckets, and objects within them.
+Buckets are effectively unlimited object stores (you can create 100 buckets without asking AWS customer service for more).
+An object in S3 is like a key-value pair in a dictionary.
+The key is some string, and the value is the binary object (often a file) that you've stored there.
+In the Web GUI S3 may look like it's closer to a filesystem with directories and such, but it's just a GUI nicety.
+If you give an object a key of "some/path-like/stuff/song.mp3" it'll appear in the GUI to be a few folders down.
+But, buckets are flat storage; that whole string is the object's *key*.
+You'll also see the term "prefix" used.
+A prefix might be something like "music/\*" to refer to all objects whose keys begin with "music/" and have other stuff after that.
+It *feels* like it's a directory that you're targeting, but it's slightly different.
+Thankfully, we can take advantage of that Web GUI feature to make the backup script's results a little easier to look at there.
+
+
+## Slicing
+
+Python supports a powerful "array slicing" feature.
+This can also be applied to strings and other sequences.
+
+```python
+>>> s = 'hello'
+>>> s[1:]
+'ello'
+>>> 'hello'[1:]
+'ello'
+>>> s[:1]
+'h'
+>>> s[:-1]
+'hell'
+>>> s[-1:]
+'o'
+>>> s[len('abc'):]
+'lo'
+>>> s[1:3]
+'el'
+```
+
+To slice, act as if you were going to index an array, but then give two indices separated by a colon instead of just one index.
+What Python gives you back is the sequence from "begin" (the first index) to "one before end", where "end" is the second index.
+Note that "begin" is inclusive, while "end" is exclusive.
+This is another one of those things that's a little weird to get used to at first, but makes more sense the deeper you go in programming.
+It's a very common way of defining ranges in different languages.
+
+If the begin index is missing, it's implied to be 0 (no effect, since that's inclusive).
+If the end index is missing, it's implied to be the sequence's length.
+Again no effect, since `'hi'[:len('hi')] == 'hi'[:2]`, and that exclusive end index "2" is one past the index of the last element ('i').
+You can also supply both indices.
+Supplying neither index (`'hello'[:]`) is a Python-specific trick; it gives you a copy of the sequence back.
+
+
+## Exercise: Preparing S3 object keys for local files
+
+```
+chris@CSU:~/work/ZeroToBoto/assets$ python backup-1.py 
+rpg-3.py
+hangman-0.py
+css/style.scss
+```
+
+The script is going to take whatever your current folder is, and basically copy that up to S3.
+So in addition to the absolute paths from the last exercise (to refer to the files on disk for uploading), we'll need a place to put things in S3.
+Instead of printing those absolute paths, print paths to all files recursively, relative to the current working directory.
+So in the example here, <tt>rpg-3.py</tt> is in the <tt>~/work/ZeroToBoto/assets</tt> directory.
+
+If Windows is giving you backslashes (<tt>'\\\\'</tt>), you can use `somestr = somestr.replace('\\', '/')` to make them more widely-accepted forward-slashes.
+
+### Hints
+
+<ol>
+<li>The order in which os.walk() advances isn't guaranteed.
+	Don't try to build up a path over time as if you were walking down and up directories in order.</li>
+<li>Recall that the current walk directory (<tt>tuple[0]</tt>) is the only absolute path.
+	Everything else is relative to it.</li>
+<li>You'll want to slice off part of the absolute path you have available to create the key.
+	But how much?  We want this script to be able to be run from anywhere, so don't cheat and hardcode anything!</li>
+{% include spoiler-hint.html major=1 minor=4
+	summary="os.getcwd()"
+	details="
+		os.getcwd() is where you ran the script from, which is what's of interest.
+" %}
+{% include spoiler-hint.html major=1 minor=5
+	summary="len()"
+	details="
+		You can slice using the len() of a string.  Specifically, os.getcwd().
+" %}
+</ol>
+
+
+## Exercise: Prefix improvement
+
+```
+```
 
 
 [Boto3 S3 docs](http://boto3.readthedocs.io/en/latest/reference/services/s3.html)
