@@ -145,6 +145,10 @@ Again no effect, since `'hi'[:len('hi')] == 'hi'[:2]`, and that exclusive end in
 You can also supply both indices.
 Supplying neither index (`'hello'[:]`) is a Python-specific trick; it gives you a copy of the sequence back.
 
+When a sequence index is negative, it begins from the end instead of the beginning.
+So a sequence's end-minus-one is the last element.
+`'hello'[-1] == 'hello'[len('hello')-1]` (recall the "end exclusive" behavior described earlier).
+
 
 ## Exercise: Preparing S3 object keys for local files
 
@@ -184,10 +188,37 @@ If Windows is giving you backslashes (<tt>'\\\\'</tt>), you can use `somestr = s
 </ol>
 
 
+## String splitting
+
+```python
+>>> s = 'hi there, this is a test'
+>>> s.split(' ')
+['hi', 'there,', 'this', 'is', 'a', 'test']
+>>> s.split(',')
+['hi there', ' this is a test']
+```
+
+Another handy feature of Python is its <tt>str</tt> class' <tt>[split()](https://docs.python.org/2/library/stdtypes.html?highlight=str%20split#str.split)</tt> method.
+This is especially useful for breaking up paths.
+
+
 ## Exercise: Prefix improvement
 
 ```
+chris@CSU:~/work/ZeroToBoto/assets$ python backup-2.py 
+assets/rpg-3.py
+assets/hangman-0.py
+assets/css/style.scss
 ```
+
+To make it easier to re-use a bucket and not mix up files from multiple runs of this script, each object uploaded will use a single prefix in common.
+Add the name of the current working directory as that prefix.
+So, prepend "&lt;cwd&gt;/" to the start of each of the keys you printed above.
+
+### Hints
+
+1. String splitting is useful here.
+2. As is a negative index into an array.  Or `len()-1`.
 
 
 [Boto3 S3 docs](http://boto3.readthedocs.io/en/latest/reference/services/s3.html)
