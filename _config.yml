@@ -3,11 +3,6 @@ permalink: /:title
 theme: jekyll-theme-cayman
 title: ZeroToBoto
 exclude:
-  - _drafts
-  - _includes
-  - _layouts
-  - _posts
-  - rejects
   - serve.sh
   - notes.md
   - README.md
