@@ -2,3 +2,15 @@ exerpt_separator: <!-- more -->
 permalink: /:title
 theme: jekyll-theme-cayman
 title: ZeroToBoto
+exclude:
+  - _drafts
+  - _includes
+  - _layouts
+  - _posts
+  - rejects
+  - serve.sh
+  - notes.md
+  - README.md
+  - LICENSE.md
+  - Gemfile
+  - _config.yml
